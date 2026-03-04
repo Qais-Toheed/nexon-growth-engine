@@ -23,136 +23,161 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-const selectClass = cn(
-  "w-full h-11 px-3 rounded-xl border border-input bg-surface text-foreground text-sm",
-  "focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent",
-  "transition-colors appearance-none"
+const inputClass = cn(
+  "h-12 rounded-xl text-sm font-medium",
+  "focus:ring-1 focus:ring-offset-0 transition-all duration-200"
 );
 
-const inputClass = cn(
-  "h-11 rounded-xl border-input bg-surface text-foreground placeholder:text-muted-foreground/60",
-  "focus:ring-ring focus:border-transparent focus:ring-2",
-);
+const selectStyle = {
+  width: "100%",
+  height: "48px",
+  padding: "0 12px",
+  borderRadius: "12px",
+  fontSize: "14px",
+  fontWeight: "500",
+  outline: "none",
+  appearance: "none" as const,
+  transition: "border-color 0.2s, box-shadow 0.2s",
+};
 
 export function LeadForm({ compact = false }: { compact?: boolean }) {
   const [submitted, setSubmitted] = useState(false);
+  const [focused, setFocused] = useState<string | null>(null);
 
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (_: FormData) => {
     await new Promise(r => setTimeout(r, 1000));
     setSubmitted(true);
   };
 
   if (submitted) {
     return (
-      <div className="flex flex-col items-center justify-center py-16 text-center">
-        <div className="w-16 h-16 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center mb-5">
-          <CheckCircle className="w-8 h-8 text-primary" />
+      <motion.div
+        initial={{ opacity: 0, scale: 0.96 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="flex flex-col items-center justify-center py-20 text-center"
+      >
+        <div className="w-18 h-18 w-[72px] h-[72px] rounded-full flex items-center justify-center mb-6 shadow-glow-blue"
+          style={{ background: "hsl(var(--primary) / 0.12)", border: "1px solid hsl(var(--primary) / 0.3)" }}>
+          <CheckCircle className="w-9 h-9 text-primary" />
         </div>
         <h3 className="text-2xl font-bold mb-3">Proposal request received</h3>
-        <p className="text-muted-foreground max-w-sm">
+        <p className="text-muted-foreground max-w-sm leading-relaxed">
           We'll review your details and get back to you within one business day with honest recommendations.
         </p>
-      </div>
+      </motion.div>
     );
   }
+
+  const fieldStyle = (name: string) => ({
+    background: "hsl(var(--surface-elevated))",
+    border: `1px solid ${focused === name ? "hsl(var(--primary) / 0.5)" : "hsl(var(--border))"}`,
+    color: "hsl(var(--foreground))",
+    boxShadow: focused === name ? "0 0 0 3px hsl(var(--primary) / 0.08)" : "none",
+  });
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
       <div className={cn("grid gap-4", compact ? "grid-cols-1" : "grid-cols-1 sm:grid-cols-2")}>
-        <div className="flex flex-col gap-1.5">
-          <Label htmlFor="name" className="text-sm font-medium">Full Name</Label>
-          <Input
-            id="name"
-            {...register("name")}
-            placeholder="Your full name"
-            className={inputClass}
-          />
-          {errors.name && <span className="text-xs text-destructive">{errors.name.message}</span>}
-        </div>
-        <div className="flex flex-col gap-1.5">
-          <Label htmlFor="business" className="text-sm font-medium">Business Name</Label>
-          <Input
-            id="business"
-            {...register("business")}
-            placeholder="Your company name"
-            className={inputClass}
-          />
-          {errors.business && <span className="text-xs text-destructive">{errors.business.message}</span>}
-        </div>
-        <div className="flex flex-col gap-1.5">
-          <Label htmlFor="email" className="text-sm font-medium">Email Address</Label>
-          <Input
-            id="email"
-            type="email"
-            {...register("email")}
-            placeholder="you@company.com"
-            className={inputClass}
-          />
-          {errors.email && <span className="text-xs text-destructive">{errors.email.message}</span>}
-        </div>
-        <div className="flex flex-col gap-1.5">
-          <Label htmlFor="phone" className="text-sm font-medium">Phone <span className="text-muted-foreground/50">(optional)</span></Label>
-          <Input
-            id="phone"
-            {...register("phone")}
-            placeholder="+1 234 567 8900"
-            className={inputClass}
-          />
-        </div>
+        {[
+          { id: "name", label: "Full Name", placeholder: "Your full name", type: "text" },
+          { id: "business", label: "Business Name", placeholder: "Your company name", type: "text" },
+          { id: "email", label: "Email Address", placeholder: "you@company.com", type: "email" },
+          { id: "phone", label: "Phone", placeholder: "+1 234 567 8900", type: "tel", optional: true },
+        ].map(({ id, label, placeholder, type, optional }) => (
+          <div key={id} className="flex flex-col gap-1.5">
+            <Label htmlFor={id} className="text-sm font-semibold">
+              {label} {optional && <span className="text-muted-foreground font-normal">(optional)</span>}
+            </Label>
+            <Input
+              id={id}
+              type={type}
+              {...register(id as keyof FormData)}
+              placeholder={placeholder}
+              className={inputClass}
+              style={fieldStyle(id)}
+              onFocus={() => setFocused(id)}
+              onBlur={() => setFocused(null)}
+            />
+            {errors[id as keyof FormData] && (
+              <span className="text-xs text-destructive">{errors[id as keyof FormData]?.message}</span>
+            )}
+          </div>
+        ))}
       </div>
 
       <div className={cn("grid gap-4", compact ? "grid-cols-1" : "grid-cols-1 sm:grid-cols-3")}>
-        <div className="flex flex-col gap-1.5">
-          <Label htmlFor="service" className="text-sm font-medium">Service Needed</Label>
-          <select id="service" {...register("service")} className={selectClass}>
-            <option value="">Select a service</option>
-            <option value="web-development">Web Development</option>
-            <option value="app-development">App Development</option>
-            <option value="digital-marketing">Digital Marketing</option>
-            <option value="shopify-ecommerce">Shopify Ecommerce</option>
-            <option value="ai-automation">AI Automation</option>
-            <option value="not-sure">Not sure yet</option>
-          </select>
-          {errors.service && <span className="text-xs text-destructive">{errors.service.message}</span>}
-        </div>
-        <div className="flex flex-col gap-1.5">
-          <Label htmlFor="budget" className="text-sm font-medium">Budget Range</Label>
-          <select id="budget" {...register("budget")} className={selectClass}>
-            <option value="">Select budget</option>
-            <option value="under-5k">Under $5,000</option>
-            <option value="5k-10k">$5,000 – $10,000</option>
-            <option value="10k-25k">$10,000 – $25,000</option>
-            <option value="25k-50k">$25,000 – $50,000</option>
-            <option value="50k-plus">$50,000+</option>
-          </select>
-          {errors.budget && <span className="text-xs text-destructive">{errors.budget.message}</span>}
-        </div>
-        <div className="flex flex-col gap-1.5">
-          <Label htmlFor="timeline" className="text-sm font-medium">Project Timeline</Label>
-          <select id="timeline" {...register("timeline")} className={selectClass}>
-            <option value="">Select timeline</option>
-            <option value="asap">As soon as possible</option>
-            <option value="1-month">Within 1 month</option>
-            <option value="1-3-months">1–3 months</option>
-            <option value="3-6-months">3–6 months</option>
-            <option value="flexible">Flexible</option>
-          </select>
-          {errors.timeline && <span className="text-xs text-destructive">{errors.timeline.message}</span>}
-        </div>
+        {[
+          {
+            id: "service",
+            label: "Service Needed",
+            options: [
+              { value: "", label: "Select a service" },
+              { value: "web-development", label: "Web Development" },
+              { value: "app-development", label: "App Development" },
+              { value: "digital-marketing", label: "Digital Marketing" },
+              { value: "shopify-ecommerce", label: "Shopify Ecommerce" },
+              { value: "ai-automation", label: "AI Automation" },
+              { value: "not-sure", label: "Not sure yet" },
+            ],
+          },
+          {
+            id: "budget",
+            label: "Budget Range",
+            options: [
+              { value: "", label: "Select budget" },
+              { value: "under-5k", label: "Under $5,000" },
+              { value: "5k-10k", label: "$5,000 – $10,000" },
+              { value: "10k-25k", label: "$10,000 – $25,000" },
+              { value: "25k-50k", label: "$25,000 – $50,000" },
+              { value: "50k-plus", label: "$50,000+" },
+            ],
+          },
+          {
+            id: "timeline",
+            label: "Project Timeline",
+            options: [
+              { value: "", label: "Select timeline" },
+              { value: "asap", label: "As soon as possible" },
+              { value: "1-month", label: "Within 1 month" },
+              { value: "1-3-months", label: "1–3 months" },
+              { value: "3-6-months", label: "3–6 months" },
+              { value: "flexible", label: "Flexible" },
+            ],
+          },
+        ].map(({ id, label, options }) => (
+          <div key={id} className="flex flex-col gap-1.5">
+            <Label htmlFor={id} className="text-sm font-semibold">{label}</Label>
+            <select
+              id={id}
+              {...register(id as keyof FormData)}
+              style={{ ...selectStyle, ...fieldStyle(id) }}
+              onFocus={() => setFocused(id)}
+              onBlur={() => setFocused(null)}
+            >
+              {options.map(o => <option key={o.value} value={o.value} style={{ background: "hsl(228 40% 7%)" }}>{o.label}</option>)}
+            </select>
+            {errors[id as keyof FormData] && (
+              <span className="text-xs text-destructive">{errors[id as keyof FormData]?.message}</span>
+            )}
+          </div>
+        ))}
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor="message" className="text-sm font-medium">Tell Us About Your Project</Label>
+        <Label htmlFor="message" className="text-sm font-semibold">Tell Us About Your Project</Label>
         <Textarea
           id="message"
           {...register("message")}
           placeholder="Describe your project, goals, and what you're looking to achieve. The more context, the better our proposal."
           rows={5}
-          className="rounded-xl border-input bg-surface text-foreground placeholder:text-muted-foreground/60 focus:ring-ring focus:border-transparent focus:ring-2 resize-none"
+          className="rounded-xl resize-none text-sm font-medium transition-all duration-200"
+          style={fieldStyle("message")}
+          onFocus={() => setFocused("message")}
+          onBlur={() => setFocused(null)}
         />
         {errors.message && <span className="text-xs text-destructive">{errors.message.message}</span>}
       </div>
@@ -160,7 +185,8 @@ export function LeadForm({ compact = false }: { compact?: boolean }) {
       <Button
         type="submit"
         disabled={isSubmitting}
-        className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold h-12 text-base shadow-glow-blue self-start px-8"
+        className="relative self-start px-8 h-12 text-base font-bold shadow-button-glow overflow-hidden group"
+        style={{ background: "hsl(var(--primary))", color: "hsl(var(--primary-foreground))" }}
       >
         {isSubmitting ? (
           <span className="flex items-center gap-2">
@@ -173,6 +199,7 @@ export function LeadForm({ compact = false }: { compact?: boolean }) {
             Get My Free Proposal
           </span>
         )}
+        <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
       </Button>
     </form>
   );
@@ -180,23 +207,33 @@ export function LeadForm({ compact = false }: { compact?: boolean }) {
 
 export function LeadFormSection() {
   return (
-    <section id="proposal" className="section-padding">
-      <div className="container">
+    <section id="proposal" className="section-padding relative overflow-hidden">
+      <div className="divider-glow absolute top-0 left-0 right-0" />
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 left-0 w-[500px] h-[400px] orb-blue opacity-6" />
+        <div className="absolute bottom-0 right-0 w-[400px] h-[300px] orb-violet opacity-5" />
+      </div>
+
+      <div className="container relative z-10">
         <div className="max-w-4xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="text-center mb-12"
           >
-            <p className="text-xs font-semibold text-primary uppercase tracking-widest mb-3">Get Started</p>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black mb-5">
+            <span className="inline-flex items-center gap-2 text-xs font-bold text-primary uppercase tracking-widest mb-4">
+              <span className="w-6 h-px bg-gradient-to-r from-primary to-cyan" />
+              Get Started
+              <span className="w-6 h-px bg-gradient-to-l from-primary to-cyan" />
+            </span>
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-black mb-5 leading-tight">
               Get your free{" "}
               <span className="text-gradient">project proposal</span>
             </h2>
-            <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-              Tell us about your project. We'll review it, ask the right questions, and come back with a scoped proposal and honest recommendations — no obligation.
+            <p className="text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
+              Tell us about your project. We'll review it and come back with a scoped proposal and honest recommendations — no obligation.
             </p>
           </motion.div>
 
@@ -205,9 +242,15 @@ export function LeadFormSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.15 }}
-            className="p-8 md:p-10 rounded-2xl bg-surface border border-border"
+            className="relative p-8 md:p-10 rounded-2xl overflow-hidden"
+            style={{ background: "hsl(var(--surface))", border: "1px solid hsl(var(--border))" }}
           >
-            <LeadForm />
+            {/* Form inner glow */}
+            <div className="absolute inset-0 pointer-events-none"
+              style={{ background: "radial-gradient(ellipse 70% 50% at 50% 0%, hsl(var(--primary) / 0.05), transparent 60%)" }} />
+            <div className="relative z-10">
+              <LeadForm />
+            </div>
           </motion.div>
         </div>
       </div>
