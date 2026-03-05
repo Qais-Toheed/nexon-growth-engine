@@ -1,18 +1,18 @@
 const items = [
-  { text: "Web Development",         accent: "primary" },
-  { text: "Mobile Apps",             accent: "none" },
-  { text: "Meta Ads",                accent: "none" },
-  { text: "Google Ads",              accent: "cyan" },
-  { text: "Shopify Ecommerce",       accent: "none" },
-  { text: "AI Automation",           accent: "primary" },
-  { text: "CRM Integration",         accent: "none" },
-  { text: "Outcome-Focused",         accent: "violet" },
-  { text: "You Own All Assets",      accent: "none" },
-  { text: "Strategy Before Execution", accent: "cyan" },
-  { text: "No Retainer Traps",       accent: "primary" },
-  { text: "Direct Communication",    accent: "none" },
-  { text: "Full-Stack Execution",    accent: "violet" },
-  { text: "Systems-First Approach",  accent: "none" },
+  { text: "Web Development",            accent: "primary" },
+  { text: "Mobile Apps",                accent: "none" },
+  { text: "Meta Ads",                   accent: "none" },
+  { text: "Google Ads",                 accent: "cyan" },
+  { text: "Shopify Ecommerce",          accent: "none" },
+  { text: "AI Automation",              accent: "primary" },
+  { text: "CRM Integration",            accent: "none" },
+  { text: "Outcome-Focused",            accent: "violet" },
+  { text: "You Own All Assets",         accent: "none" },
+  { text: "Strategy Before Execution",  accent: "cyan" },
+  { text: "No Retainer Traps",          accent: "primary" },
+  { text: "Direct Communication",       accent: "none" },
+  { text: "Full-Stack Execution",       accent: "violet" },
+  { text: "Systems-First Approach",     accent: "none" },
 ];
 
 const dotColors: Record<string, string> = {
@@ -41,14 +41,10 @@ export function TrustBar() {
         background:   "hsl(var(--surface))",
       }}
     >
-      {/* Subtle top glow */}
-      <div className="absolute top-0 left-0 right-0 h-px pointer-events-none"
-        style={{ background: "linear-gradient(90deg, transparent, hsl(var(--primary)/0.35), hsl(var(--cyan)/0.25), transparent)" }} />
-
       {/* Fade edges */}
-      <div className="absolute left-0 top-0 bottom-0 w-28 z-10 pointer-events-none"
+      <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
         style={{ background: "linear-gradient(to right, hsl(var(--surface)), transparent)" }} />
-      <div className="absolute right-0 top-0 bottom-0 w-28 z-10 pointer-events-none"
+      <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
         style={{ background: "linear-gradient(to left, hsl(var(--surface)), transparent)" }} />
 
       <div className="marquee-track">
@@ -64,7 +60,7 @@ export function TrustBar() {
               className="w-1.5 h-1.5 rounded-full flex-shrink-0"
               style={{
                 background: dotColors[item.accent],
-                boxShadow: item.accent !== "none" ? `0 0 8px ${dotColors[item.accent]}` : "none",
+                boxShadow: item.accent !== "none" ? `0 0 6px ${dotColors[item.accent]}` : "none",
               }}
             />
           </div>
