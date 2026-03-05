@@ -339,6 +339,11 @@
     filter: blur(52px);
   }
 
+  /* ── Animate helper ── */
+  .animate-orb-float {
+    animation: orb-float 9s ease-in-out infinite;
+  }
+
   /* ── Dividers ── */
   .divider-glow {
     height: 1px;

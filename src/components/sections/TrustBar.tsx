@@ -34,33 +34,33 @@ const repeated = [...items, ...items];
 export function TrustBar() {
   return (
     <div
-      className="relative py-5 overflow-hidden"
+      className="relative py-4 overflow-hidden"
       style={{
         borderTop:    "1px solid hsl(var(--border))",
         borderBottom: "1px solid hsl(var(--border))",
-        background:   "hsl(var(--surface))",
+        background:   "hsl(220 28% 98%)",
       }}
     >
       {/* Fade edges */}
-      <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-        style={{ background: "linear-gradient(to right, hsl(var(--surface)), transparent)" }} />
-      <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-        style={{ background: "linear-gradient(to left, hsl(var(--surface)), transparent)" }} />
+      <div className="absolute left-0 top-0 bottom-0 w-32 z-10 pointer-events-none"
+        style={{ background: "linear-gradient(to right, hsl(220 28% 98%), transparent)" }} />
+      <div className="absolute right-0 top-0 bottom-0 w-32 z-10 pointer-events-none"
+        style={{ background: "linear-gradient(to left, hsl(220 28% 98%), transparent)" }} />
 
       <div className="marquee-track">
         {repeated.map((item, i) => (
-          <div key={i} className="flex items-center gap-5 px-5 flex-shrink-0">
+          <div key={i} className="flex items-center gap-6 px-6 flex-shrink-0">
             <span
-              className="text-sm font-semibold whitespace-nowrap tracking-wide"
+              className="text-[13px] font-semibold whitespace-nowrap tracking-wide"
               style={{ color: textColors[item.accent] }}
             >
               {item.text}
             </span>
             <span
-              className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+              className="w-1 h-1 rounded-full flex-shrink-0"
               style={{
                 background: dotColors[item.accent],
-                boxShadow: item.accent !== "none" ? `0 0 6px ${dotColors[item.accent]}` : "none",
+                boxShadow: item.accent !== "none" ? `0 0 5px ${dotColors[item.accent]}` : "none",
               }}
             />
           </div>

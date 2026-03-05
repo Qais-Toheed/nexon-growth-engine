@@ -1,4 +1,4 @@
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { Search, Lightbulb, Code2, Rocket, TrendingUp } from "lucide-react";
 
@@ -12,149 +12,186 @@ const steps = [
   { number: "04", icon: Rocket,     title: "Launch",     color: "primary",
     description: "Rigorous pre-launch testing, clean deployment, and thorough handover. You own every asset." },
   { number: "05", icon: TrendingUp, title: "Scale",      color: "cyan",
-    description: "Launch is the start, not the end. We build foundations designed for growth — then help you use them to scale." },
+    description: "Launch is the start, not the end. We build foundations designed for growth — then help you use them." },
 ];
 
-const tokens: Record<string, { color: string; border: string; bg: string; iconBg: string; shadow: string }> = {
-  primary: {
-    color:  "hsl(var(--primary))",
-    border: "hsl(var(--primary)/0.22)",
-    bg:     "hsl(var(--primary)/0.06)",
-    iconBg: "linear-gradient(135deg, hsl(var(--primary)/0.16), hsl(var(--primary)/0.06))",
-    shadow: "0 0 30px hsl(214 100% 50% / 0.22)",
-  },
-  cyan: {
-    color:  "hsl(var(--cyan))",
-    border: "hsl(var(--cyan)/0.22)",
-    bg:     "hsl(var(--cyan)/0.06)",
-    iconBg: "linear-gradient(135deg, hsl(var(--cyan)/0.16), hsl(var(--cyan)/0.05))",
-    shadow: "0 0 28px hsl(188 97% 44% / 0.20)",
-  },
-  violet: {
-    color:  "hsl(var(--violet))",
-    border: "hsl(var(--violet)/0.22)",
-    bg:     "hsl(var(--violet)/0.06)",
-    iconBg: "linear-gradient(135deg, hsl(var(--violet)/0.16), hsl(var(--violet)/0.05))",
-    shadow: "0 0 28px hsl(255 82% 62% / 0.20)",
-  },
+const accentColors: Record<string, string> = {
+  primary: "hsl(var(--primary))",
+  cyan:    "hsl(var(--cyan))",
+  violet:  "hsl(var(--violet))",
 };
 
 export function ProcessTimeline() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section className="section-padding relative overflow-hidden" ref={ref}
-      style={{ background: "hsl(var(--background))" }}>
-
+    <section
+      ref={ref}
+      className="relative overflow-hidden"
+      style={{
+        background: "hsl(var(--background))",
+        paddingTop: "clamp(80px, 10vw, 160px)",
+        paddingBottom: "clamp(80px, 10vw, 160px)",
+      }}
+    >
       {/* Ambient */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[500px] orb-blue opacity-[0.06] pointer-events-none" />
-      <div className="divider-glow absolute top-0 left-0 right-0" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] pointer-events-none"
+        style={{ background: "radial-gradient(ellipse, hsl(214 100% 50% / 0.05) 0%, transparent 65%)", filter: "blur(50px)" }} />
+      <div className="absolute top-0 left-0 right-0 divider-glow" />
 
       <div className="container relative z-10">
 
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="text-center max-w-2xl mx-auto mb-24"
-        >
-          <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] mb-5"
-            style={{ color: "hsl(var(--primary))" }}>
-            <span className="w-6 h-px" style={{ background: "linear-gradient(to right, hsl(var(--primary)), hsl(var(--cyan)))" }} />
-            How We Work
-            <span className="w-6 h-px" style={{ background: "linear-gradient(to left, hsl(var(--primary)), hsl(var(--cyan)))" }} />
-          </span>
-          <h2 className="text-5xl sm:text-6xl font-black mb-5 leading-[1.0]"
-            style={{ color: "hsl(var(--foreground))" }}>
-            A process built for{" "}
-            <span className="text-gradient">clarity and results</span>
-          </h2>
-          <p className="text-lg leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>
-            We don't just execute — we execute with a system. Every engagement follows a clear process so you always know what's happening and why.
-          </p>
-        </motion.div>
-
-        {/* ── Desktop: horizontal timeline ── */}
-        <div className="hidden lg:block relative">
-          {/* Base track */}
-          <div className="absolute top-[50px] left-[calc(10%+42px)] right-[calc(10%+42px)] h-px"
-            style={{ background: "hsl(var(--border))" }} />
-
-          {/* Animated connector */}
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-10 mb-24">
           <motion.div
-            initial={{ scaleX: 0 }}
-            animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
-            transition={{ duration: 1.8, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            style={{ originX: 0 }}
-            className="absolute top-[50px] left-[calc(10%+42px)] right-[calc(10%+42px)] h-px process-connector"
-          />
-
-          <div className="grid grid-cols-5 gap-4 px-[10%]">
-            {steps.map((step, i) => {
-              const Icon = step.icon;
-              const t = tokens[step.color];
-              return (
-                <motion.div
-                  key={step.number}
-                  initial={{ opacity: 0, y: 36 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.65, delay: i * 0.13, ease: [0.22, 1, 0.36, 1] }}
-                  className="group flex flex-col items-center text-center"
-                >
-                  <div
-                    className="relative z-10 w-[100px] h-[100px] rounded-2xl flex flex-col items-center justify-center mb-7 cursor-default card-white card-white-hover transition-all duration-400"
-                    style={{ border: `1.5px solid ${t.border}` }}
-                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.boxShadow = t.shadow; }}
-                    onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow = ""; }}
-                  >
-                    <Icon className="w-6 h-6 mb-1" style={{ color: t.color }} />
-                    <span className="step-number" style={{ color: t.color }}>{step.number}</span>
-                  </div>
-
-                  <h3 className="text-sm font-bold mb-2" style={{ color: t.color }}>{step.title}</h3>
-                  <p className="text-xs leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>
-                    {step.description}
-                  </p>
-                </motion.div>
-              );
-            })}
-          </div>
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+            className="max-w-xl"
+          >
+            <div className="flex items-center gap-3 mb-7">
+              <div className="h-px w-10" style={{ background: "linear-gradient(to right, hsl(var(--primary)), hsl(var(--cyan)))" }} />
+              <span className="text-[11px] font-bold uppercase tracking-[0.2em]" style={{ color: "hsl(var(--primary))" }}>
+                How We Work
+              </span>
+            </div>
+            <h2
+              className="font-black leading-[1.0] tracking-tight"
+              style={{ fontSize: "clamp(2.8rem,6vw,76px)", color: "hsl(var(--foreground))" }}
+            >
+              A process built<br />
+              for{" "}
+              <span style={{
+                background: "linear-gradient(130deg, hsl(var(--primary)), hsl(var(--cyan)))",
+                WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
+              }}>
+                clarity.
+              </span>
+            </h2>
+          </motion.div>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="max-w-md text-base leading-relaxed lg:pb-2"
+            style={{ color: "hsl(var(--muted-foreground))" }}
+          >
+            We don't just execute — we execute with a system. Every engagement follows a clear process so you always know what's happening and why.
+          </motion.p>
         </div>
 
-        {/* ── Mobile: vertical ── */}
-        <div className="lg:hidden flex flex-col">
+        {/* ── Desktop: large numbered steps with left border ── */}
+        <div className="hidden lg:grid lg:grid-cols-5 gap-0 relative">
+
+          {/* Animated base track */}
+          <div className="absolute top-[52px] left-[80px] right-[80px] h-px"
+            style={{ background: "hsl(var(--border))" }} />
+
+          {/* Animated progress line */}
+          <motion.div
+            className="absolute top-[52px] h-px process-connector"
+            initial={{ width: 0 }}
+            animate={isInView ? { width: "calc(100% - 160px)" } : { width: 0 }}
+            transition={{ duration: 2.2, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            style={{ left: "80px" }}
+          />
+
           {steps.map((step, i) => {
             const Icon = step.icon;
-            const t = tokens[step.color];
+            const accent = accentColors[step.color];
             return (
               <motion.div
                 key={step.number}
-                initial={{ opacity: 0, x: -24 }}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.65, delay: 0.3 + i * 0.12, ease: [0.22, 1, 0.36, 1] }}
+                className="group flex flex-col items-center text-center px-4"
+              >
+                {/* Node */}
+                <div
+                  className="relative z-10 w-[104px] h-[104px] rounded-3xl flex flex-col items-center justify-center mb-8 transition-all duration-400 cursor-default"
+                  style={{
+                    background: "hsl(220 20% 100%)",
+                    border: `2px solid ${accent.replace(")", "/0.25)")}`,
+                    boxShadow: `0 4px 24px ${accent.replace(")", "/0.10)")}`,
+                  }}
+                  onMouseEnter={e => {
+                    const el = e.currentTarget as HTMLElement;
+                    el.style.boxShadow = `0 8px 40px ${accent.replace(")", "/0.28)")}`;
+                    el.style.borderColor = accent;
+                    el.style.transform = "scale(1.08) translateY(-4px)";
+                  }}
+                  onMouseLeave={e => {
+                    const el = e.currentTarget as HTMLElement;
+                    el.style.boxShadow = `0 4px 24px ${accent.replace(")", "/0.10)")}`;
+                    el.style.borderColor = accent.replace(")", "/0.25)");
+                    el.style.transform = "";
+                  }}
+                >
+                  <Icon className="w-6 h-6 mb-1.5" style={{ color: accent }} />
+                  <span
+                    className="text-[10px] font-black uppercase tracking-widest"
+                    style={{ color: accent }}
+                  >
+                    {step.number}
+                  </span>
+                </div>
+
+                <h3 className="text-sm font-black mb-2 uppercase tracking-wide" style={{ color: accent }}>
+                  {step.title}
+                </h3>
+                <p className="text-xs leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>
+                  {step.description}
+                </p>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* ── Mobile: large vertical ── */}
+        <div className="lg:hidden">
+          {steps.map((step, i) => {
+            const Icon = step.icon;
+            const accent = accentColors[step.color];
+            return (
+              <motion.div
+                key={step.number}
+                initial={{ opacity: 0, x: -28 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.55, delay: i * 0.09 }}
-                className="flex gap-5"
+                transition={{ duration: 0.6, delay: i * 0.08 }}
+                className="flex gap-6"
               >
+                {/* Left connector */}
                 <div className="flex flex-col items-center flex-shrink-0">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center card-white"
-                    style={{ border: `1.5px solid ${t.border}` }}>
-                    <Icon className="w-5 h-5" style={{ color: t.color }} />
+                  <div
+                    className="w-14 h-14 rounded-2xl flex items-center justify-center z-10"
+                    style={{
+                      background: "hsl(220 20% 100%)",
+                      border: `2px solid ${accent.replace(")", "/0.30)")}`,
+                      boxShadow: `0 4px 20px ${accent.replace(")", "/0.12)")}`,
+                    }}
+                  >
+                    <Icon className="w-5 h-5" style={{ color: accent }} />
                   </div>
                   {i < steps.length - 1 && (
-                    <div className="w-px flex-1 mt-2"
+                    <div
+                      className="w-px flex-1 mt-2"
                       style={{
-                        background: `linear-gradient(to bottom, ${t.color}, transparent)`,
-                        minHeight: "36px", opacity: 0.3,
-                      }} />
+                        background: `linear-gradient(to bottom, ${accent}, transparent)`,
+                        minHeight: "40px", opacity: 0.25,
+                      }}
+                    />
                   )}
                 </div>
-                <div className="pb-10">
-                  <span className="step-number block mb-1" style={{ color: t.color }}>{step.number}</span>
-                  <h3 className="text-base font-bold mb-1.5" style={{ color: "hsl(var(--foreground))" }}>{step.title}</h3>
+                <div className="pb-12 pt-1">
+                  <span className="text-[10px] font-black uppercase tracking-widest block mb-1" style={{ color: accent }}>
+                    {step.number} — {step.title}
+                  </span>
                   <p className="text-sm leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>
                     {step.description}
                   </p>
