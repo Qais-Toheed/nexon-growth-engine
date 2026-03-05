@@ -73,10 +73,10 @@ export function LeadForm({ compact = false }: { compact?: boolean }) {
   }
 
   const fieldStyle = (name: string) => ({
-    background: "hsl(var(--surface-elevated))",
-    border: `1px solid ${focused === name ? "hsl(var(--primary) / 0.5)" : "hsl(var(--border))"}`,
+    background: "hsl(220 30% 100%)",
+    border: `1px solid ${focused === name ? "hsl(var(--primary) / 0.45)" : "hsl(var(--border))"}`,
     color: "hsl(var(--foreground))",
-    boxShadow: focused === name ? "0 0 0 3px hsl(var(--primary) / 0.08)" : "none",
+    boxShadow: focused === name ? "0 0 0 3px hsl(var(--primary) / 0.06)" : "0 1px 4px hsl(220 30% 10% / 0.04)",
   });
 
   return (
@@ -158,7 +158,7 @@ export function LeadForm({ compact = false }: { compact?: boolean }) {
               onFocus={() => setFocused(id)}
               onBlur={() => setFocused(null)}
             >
-              {options.map(o => <option key={o.value} value={o.value} style={{ background: "hsl(228 40% 7%)" }}>{o.label}</option>)}
+              {options.map(o => <option key={o.value} value={o.value} style={{ background: "hsl(220 30% 100%)" }}>{o.label}</option>)}
             </select>
             {errors[id as keyof FormData] && (
               <span className="text-xs text-destructive">{errors[id as keyof FormData]?.message}</span>
@@ -207,12 +207,11 @@ export function LeadForm({ compact = false }: { compact?: boolean }) {
 
 export function LeadFormSection() {
   return (
-    <section id="proposal" className="section-padding relative overflow-hidden">
+    <section id="proposal" className="section-padding relative overflow-hidden"
+      style={{ background: "hsl(var(--background))" }}>
       <div className="divider-glow absolute top-0 left-0 right-0" />
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-0 w-[500px] h-[400px] orb-blue opacity-6" />
-        <div className="absolute bottom-0 right-0 w-[400px] h-[300px] orb-violet opacity-5" />
-      </div>
+      <div className="absolute top-0 left-0 w-[500px] h-[400px] orb-blue opacity-[0.05] pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[400px] h-[300px] orb-violet opacity-[0.04] pointer-events-none" />
 
       <div className="container relative z-10">
         <div className="max-w-4xl mx-auto">
@@ -223,16 +222,19 @@ export function LeadFormSection() {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="text-center mb-12"
           >
-            <span className="inline-flex items-center gap-2 text-xs font-bold text-primary uppercase tracking-widest mb-4">
-              <span className="w-6 h-px bg-gradient-to-r from-primary to-cyan" />
+            <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] mb-5"
+              style={{ color: "hsl(var(--primary))" }}>
+              <span className="w-6 h-px" style={{ background: "linear-gradient(to right, hsl(var(--primary)), hsl(var(--cyan)))" }} />
               Get Started
-              <span className="w-6 h-px bg-gradient-to-l from-primary to-cyan" />
+              <span className="w-6 h-px" style={{ background: "linear-gradient(to left, hsl(var(--primary)), hsl(var(--cyan)))" }} />
             </span>
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-black mb-5 leading-tight">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-black mb-5 leading-tight"
+              style={{ color: "hsl(var(--foreground))" }}>
               Get your free{" "}
               <span className="text-gradient">project proposal</span>
             </h2>
-            <p className="text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
+            <p className="text-lg max-w-xl mx-auto leading-relaxed"
+              style={{ color: "hsl(var(--muted-foreground))" }}>
               Tell us about your project. We'll review it and come back with a scoped proposal and honest recommendations — no obligation.
             </p>
           </motion.div>
@@ -242,12 +244,9 @@ export function LeadFormSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.15 }}
-            className="relative p-8 md:p-10 rounded-2xl overflow-hidden"
-            style={{ background: "hsl(var(--surface))", border: "1px solid hsl(var(--border))" }}
+            className="relative p-8 md:p-10 rounded-2xl overflow-hidden card-white"
+            style={{ boxShadow: "0 8px 48px hsl(220 30% 10% / 0.08), 0 2px 12px hsl(220 30% 10% / 0.04)" }}
           >
-            {/* Form inner glow */}
-            <div className="absolute inset-0 pointer-events-none"
-              style={{ background: "radial-gradient(ellipse 70% 50% at 50% 0%, hsl(var(--primary) / 0.05), transparent 60%)" }} />
             <div className="relative z-10">
               <LeadForm />
             </div>
