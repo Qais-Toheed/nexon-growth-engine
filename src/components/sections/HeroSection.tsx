@@ -1,135 +1,233 @@
-import { Suspense } from "react";
+import { Suspense, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, MessageCircle, Calendar, Sparkles, ChevronDown } from "lucide-react";
+import { ArrowRight, MessageCircle, Calendar, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { HeroCanvas } from "@/components/three/HeroCanvas";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { useRef } from "react";
 
-const pills = [
-  { label: "Web Development",   type: "primary", x: "66%", y: "18%", delay: 1.4  },
-  { label: "Mobile Apps",        type: "default", x: "74%", y: "36%", delay: 1.65 },
-  { label: "Meta & Google Ads",  type: "cyan",    x: "61%", y: "56%", delay: 1.9  },
-  { label: "Shopify",            type: "primary", x: "75%", y: "72%", delay: 2.1  },
-  { label: "AI Automation",      type: "default", x: "64%", y: "84%", delay: 2.3  },
-];
-
-const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.12 } } };
-const item = {
-  hidden:   { opacity: 0, y: 32 },
-  visible:  { opacity: 1, y: 0, transition: { duration: 0.85, ease: [0.22, 1, 0.36, 1] } },
+const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.14 } } };
+const fadeUp = {
+  hidden:  { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.95, ease: [0.22, 1, 0.36, 1] } },
 };
+
+const metrics = [
+  { value: "3×", label: "Average revenue lift" },
+  { value: "48h", label: "Strategy delivered" },
+  { value: "100%", label: "Asset ownership" },
+];
 
 export function HeroSection() {
   const isMobile = useIsMobile();
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
-  const yContent = useTransform(scrollYProgress, [0, 1], [0, -60]);
-  const yCanvas  = useTransform(scrollYProgress, [0, 1], [0, -120]);
-  const opacity  = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+  const yContent = useTransform(scrollYProgress, [0, 1], [0, -80]);
+  const yCanvas  = useTransform(scrollYProgress, [0, 1], [0, -160]);
+  const opacity  = useTransform(scrollYProgress, [0, 0.55], [1, 0]);
 
   return (
-    <section ref={sectionRef} className="relative min-h-screen flex items-center overflow-hidden pt-20"
-      style={{ background: "linear-gradient(160deg, hsl(220 30% 99%) 0%, hsl(218 35% 97%) 50%, hsl(214 45% 96%) 100%)" }}>
-
-      {/* ── Ambient glow light fields ── */}
+    <section
+      ref={sectionRef}
+      className="relative min-h-screen flex items-center overflow-hidden pt-20"
+      style={{
+        background: "linear-gradient(150deg, hsl(220 35% 100%) 0%, hsl(218 40% 98%) 40%, hsl(214 50% 96%) 100%)",
+      }}
+    >
+      {/* ── Layered atmospheric glows ── */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute right-[8%] top-[8%] w-[700px] h-[700px] orb-blue opacity-[0.18] animate-orb-float" />
-        <div className="absolute right-[30%] bottom-[5%] w-[400px] h-[400px] orb-violet opacity-[0.10]" style={{ animationDelay: "2.5s" }} />
-        <div className="absolute left-[3%] top-[40%] w-[350px] h-[350px] orb-cyan opacity-[0.09] animate-orb-float" style={{ animationDelay: "4s" }} />
+        {/* Primary orb — right side behind 3D */}
+        <div
+          className="absolute animate-orb-float"
+          style={{
+            right: "-5%", top: "5%",
+            width: "75vw", height: "80vh",
+            background: "radial-gradient(ellipse, hsl(214 100% 50% / 0.12) 0%, hsl(214 100% 50% / 0.04) 40%, transparent 70%)",
+            filter: "blur(40px)",
+          }}
+        />
+        {/* Violet depth layer */}
+        <div
+          className="absolute"
+          style={{
+            right: "10%", bottom: "10%",
+            width: "50vw", height: "50vh",
+            background: "radial-gradient(ellipse, hsl(255 82% 62% / 0.08) 0%, transparent 65%)",
+            filter: "blur(60px)",
+            animationDelay: "3s",
+          }}
+        />
+        {/* Cyan left accent */}
+        <div
+          className="absolute animate-orb-float"
+          style={{
+            left: "-8%", top: "35%",
+            width: "45vw", height: "55vh",
+            background: "radial-gradient(ellipse, hsl(188 97% 44% / 0.06) 0%, transparent 65%)",
+            filter: "blur(70px)",
+            animationDelay: "5s",
+          }}
+        />
       </div>
 
-      {/* Fine grid texture overlay */}
-      <div className="absolute inset-0 pointer-events-none opacity-[0.025]"
+      {/* ── Fine dot grid ── */}
+      <div
+        className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: "linear-gradient(hsl(214 100% 50%) 1px, transparent 1px), linear-gradient(90deg, hsl(214 100% 50%) 1px, transparent 1px)",
-          backgroundSize: "80px 80px",
-        }} />
+          backgroundImage: "radial-gradient(circle, hsl(214 100% 50% / 0.06) 1px, transparent 1px)",
+          backgroundSize: "52px 52px",
+          opacity: 0.8,
+        }}
+      />
 
-      {/* Diagonal light beam */}
-      <div className="absolute top-0 left-[50%] w-[1px] h-[45vh] pointer-events-none"
-        style={{ background: "linear-gradient(to bottom, transparent, hsl(var(--primary)/0.3), transparent)", opacity: 0.6 }} />
-      <div className="absolute top-0 left-[55%] w-[1px] h-[30vh] pointer-events-none"
-        style={{ background: "linear-gradient(to bottom, transparent, hsl(var(--cyan)/0.25), transparent)", opacity: 0.4 }} />
+      {/* ── Vertical light beams ── */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div
+          className="absolute top-0 h-[55vh] w-px"
+          style={{
+            left: "52%",
+            background: "linear-gradient(to bottom, transparent, hsl(214 100% 50% / 0.22), transparent)",
+          }}
+        />
+        <div
+          className="absolute top-0 h-[38vh] w-px"
+          style={{
+            left: "58%",
+            background: "linear-gradient(to bottom, transparent, hsl(188 97% 44% / 0.16), transparent)",
+          }}
+        />
+      </div>
 
-      {/* ── 3D Canvas — right side desktop ── */}
+      {/* ── 3D Canvas ── */}
       {!isMobile && (
-        <motion.div style={{ y: yCanvas }} className="absolute right-0 top-0 bottom-0 w-[58%] pointer-events-none z-[1]">
+        <motion.div
+          style={{ y: yCanvas }}
+          className="absolute right-0 top-0 bottom-0 w-[60%] pointer-events-none z-[1]"
+        >
           <Suspense fallback={null}>
             <HeroCanvas />
           </Suspense>
         </motion.div>
       )}
 
-      {/* Mobile gradient fallback */}
+      {/* Mobile glow fallback */}
       {isMobile && (
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/4 right-0 w-64 h-64 orb-blue opacity-20 animate-orb-float" />
-          <div className="absolute bottom-1/3 left-1/4 w-48 h-48 orb-violet opacity-10" />
+          <div
+            className="absolute top-1/4 right-0 w-72 h-72 animate-orb-float"
+            style={{ background: "radial-gradient(circle, hsl(214 100% 50% / 0.14) 0%, transparent 70%)", filter: "blur(40px)" }}
+          />
         </div>
       )}
 
-      {/* ── Floating service pills ── */}
-      {!isMobile && pills.map((pill) => (
-        <motion.div
-          key={pill.label}
-          initial={{ opacity: 0, scale: 0.7, y: 12 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: pill.delay, ease: "easeOut" }}
-          className="absolute z-[2] hidden xl:flex pointer-events-none"
-          style={{ left: pill.x, top: pill.y }}
-        >
-          <span className={`pill-tag${pill.type === "primary" ? "-primary" : pill.type === "cyan" ? "-cyan" : ""} text-xs shadow-sm`}>
-            {pill.label}
-          </span>
-        </motion.div>
-      ))}
+      {/* ── Floating metric chips — desktop only ── */}
+      {!isMobile && (
+        <div className="absolute right-[4%] bottom-[18%] z-[3] hidden xl:flex flex-col gap-3">
+          {metrics.map((m, i) => (
+            <motion.div
+              key={m.label}
+              initial={{ opacity: 0, x: 24 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7, delay: 2.0 + i * 0.18, ease: "easeOut" }}
+              className="glass-ultra rounded-xl px-5 py-3 flex items-center gap-4"
+              style={{ boxShadow: "0 4px 24px hsl(214 100% 50% / 0.08)" }}
+            >
+              <span
+                className="text-2xl font-black leading-none"
+                style={{ color: "hsl(var(--primary))" }}
+              >
+                {m.value}
+              </span>
+              <span className="text-xs font-medium leading-tight max-w-[80px]" style={{ color: "hsl(var(--muted-foreground))" }}>
+                {m.label}
+              </span>
+            </motion.div>
+          ))}
+        </div>
+      )}
 
       {/* ── Main content ── */}
-      <motion.div style={{ y: yContent, opacity }} className="container relative z-10 py-24 lg:py-40">
-        <div className="max-w-[640px] xl:max-w-[680px]">
+      <motion.div style={{ y: yContent, opacity }} className="container relative z-10 py-28 lg:py-44">
+        <div className="max-w-[660px] xl:max-w-[720px]">
           <motion.div variants={stagger} initial="hidden" animate="visible">
 
-            {/* Eyebrow */}
-            <motion.div variants={item}>
-              <div className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full text-xs font-bold tracking-[0.15em] uppercase glass-ultra"
-                style={{ color: "hsl(var(--primary))" }}>
-                <Sparkles className="w-3 h-3" />
+            {/* Eyebrow label */}
+            <motion.div variants={fadeUp}>
+              <div
+                className="inline-flex items-center gap-2.5 mb-9 pl-1 pr-4 py-1.5 rounded-full text-[11px] font-bold tracking-[0.16em] uppercase"
+                style={{
+                  background: "hsl(214 100% 50% / 0.07)",
+                  border: "1px solid hsl(214 100% 50% / 0.18)",
+                  color: "hsl(var(--primary))",
+                }}
+              >
+                <span
+                  className="w-5 h-5 rounded-full flex items-center justify-center"
+                  style={{ background: "hsl(214 100% 50% / 0.15)" }}
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-current animate-pulse" />
+                </span>
                 Growth-Focused Digital Agency
-                <span className="w-1.5 h-1.5 rounded-full bg-current animate-pulse" />
               </div>
             </motion.div>
 
-            {/* Headline */}
-            <motion.h1 variants={item}
-              className="text-[clamp(2.8rem,7.5vw,86px)] font-black leading-[1.02] tracking-tight mb-6"
-              style={{ color: "hsl(var(--foreground))" }}
+            {/* Headline — cinematic scale */}
+            <motion.h1
+              variants={fadeUp}
+              className="font-black leading-[1.0] tracking-[-0.035em] mb-7"
+              style={{
+                fontSize: "clamp(3.2rem,8.5vw,100px)",
+                color: "hsl(var(--foreground))",
+              }}
             >
-              Turn Clicks Into{" "}
-              <span className="text-gradient text-glow-blue">Clients.</span>
+              Turn Clicks{" "}
+              <br className="hidden sm:block" />
+              Into{" "}
+              <span
+                className="relative inline-block"
+                style={{
+                  background: "linear-gradient(130deg, hsl(var(--primary)) 0%, hsl(var(--cyan)) 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                  filter: "drop-shadow(0 0 32px hsl(214 100% 50% / 0.22))",
+                }}
+              >
+                Clients.
+              </span>
               <br />
-              <span style={{ color: "hsl(var(--foreground))" }}>Browsers Into </span>
-              <span className="text-gradient-violet">Buyers.</span>
+              <span style={{ color: "hsl(var(--foreground))" }}>Browsers Into{" "}</span>
+              <span
+                style={{
+                  background: "linear-gradient(130deg, hsl(var(--primary)) 0%, hsl(var(--violet)) 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}
+              >
+                Buyers.
+              </span>
             </motion.h1>
 
-            {/* Sub */}
-            <motion.p variants={item}
-              className="text-lg sm:text-xl leading-relaxed mb-10 max-w-[520px]"
+            {/* Subheadline */}
+            <motion.p
+              variants={fadeUp}
+              className="text-xl sm:text-2xl leading-relaxed mb-12 max-w-[540px] font-light"
               style={{ color: "hsl(var(--muted-foreground))" }}
             >
-              We engineer high-converting websites, mobile apps, performance marketing, and AI automations — built around one goal:{" "}
-              <span style={{ color: "hsl(var(--foreground))", fontWeight: 600 }}>growing your revenue.</span>
+              We engineer high-converting websites, mobile apps, performance marketing, and AI automations —{" "}
+              <span style={{ color: "hsl(var(--foreground))", fontWeight: 600 }}>built to grow your revenue.</span>
             </motion.p>
 
-            {/* CTAs */}
-            <motion.div variants={item} className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-10">
-              <Button asChild size="lg"
-                className="relative font-bold px-8 text-base group overflow-hidden rounded-xl"
+            {/* CTA row */}
+            <motion.div variants={fadeUp} className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-12">
+              <Button
+                asChild size="lg"
+                className="relative font-bold px-9 text-base group overflow-hidden rounded-2xl h-14"
                 style={{
-                  background: "hsl(var(--primary))",
+                  background: "linear-gradient(135deg, hsl(var(--primary)), hsl(214 100% 42%))",
                   color: "hsl(var(--primary-foreground))",
-                  boxShadow: "0 4px 24px hsl(214 100% 50% / 0.35), 0 2px 8px hsl(214 100% 50% / 0.2)",
+                  boxShadow: "0 6px 32px hsl(214 100% 50% / 0.38), 0 2px 8px hsl(214 100% 50% / 0.2), inset 0 1px 0 hsl(214 100% 75% / 0.2)",
                 }}
               >
                 <a href="https://calendly.com" target="_blank" rel="noopener noreferrer">
@@ -139,14 +237,15 @@ export function HeroSection() {
                 </a>
               </Button>
 
-              <Button asChild variant="outline" size="lg"
-                className="font-semibold text-base transition-all duration-300 group rounded-xl"
+              <Button
+                asChild variant="outline" size="lg"
+                className="font-semibold text-base transition-all duration-300 group rounded-2xl h-14"
                 style={{
                   borderColor: "hsl(var(--border))",
-                  background: "hsl(220 30% 100% / 0.8)",
-                  backdropFilter: "blur(12px)",
+                  background: "hsl(220 30% 100% / 0.9)",
+                  backdropFilter: "blur(16px)",
                   color: "hsl(var(--foreground))",
-                  boxShadow: "0 2px 12px hsl(220 30% 10% / 0.08)",
+                  boxShadow: "0 2px 16px hsl(220 30% 10% / 0.07), inset 0 1px 0 hsl(0 0% 100%)",
                 }}
               >
                 <Link to="/contact">
@@ -155,28 +254,34 @@ export function HeroSection() {
                 </Link>
               </Button>
 
-              <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-2 text-sm font-medium py-2 px-1 transition-colors"
+              <a
+                href="https://wa.me/1234567890"
+                target="_blank" rel="noopener noreferrer"
+                className="flex items-center gap-2.5 text-sm font-medium py-2 px-1 transition-colors"
                 style={{ color: "hsl(var(--muted-foreground))" }}
                 onMouseEnter={e => (e.currentTarget.style.color = "hsl(var(--foreground))")}
                 onMouseLeave={e => (e.currentTarget.style.color = "hsl(var(--muted-foreground))")}
               >
-                <span className="w-7 h-7 rounded-full flex items-center justify-center border"
-                  style={{ background: "hsl(142 70% 45%/0.10)", borderColor: "hsl(142 70% 45%/0.25)" }}>
-                  <MessageCircle className="w-3.5 h-3.5" style={{ color: "hsl(142 70% 45%)" }} />
+                <span
+                  className="w-8 h-8 rounded-full flex items-center justify-center"
+                  style={{ background: "hsl(142 70% 45%/0.10)", border: "1px solid hsl(142 70% 45%/0.25)" }}
+                >
+                  <MessageCircle className="w-4 h-4" style={{ color: "hsl(142 70% 45%)" }} />
                 </span>
                 Chat on WhatsApp
               </a>
             </motion.div>
 
-            {/* Trust tags */}
-            <motion.div variants={item}>
-              <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs"
-                style={{ color: "hsl(var(--muted-foreground))" }}>
+            {/* Trust line */}
+            <motion.div variants={fadeUp}>
+              <div
+                className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs"
+                style={{ color: "hsl(var(--muted-foreground))" }}
+              >
                 {["Strategy-first", "You own all assets", "No retainer traps", "Direct communication"].map((t, i) => (
-                  <span key={t} className="flex items-center gap-1.5">
-                    {i > 0 && <span className="w-px h-3 rounded-full" style={{ background: "hsl(var(--border))" }} />}
-                    <span className="w-1 h-1 rounded-full" style={{ background: "hsl(var(--primary)/0.6)" }} />
+                  <span key={t} className="flex items-center gap-2">
+                    {i > 0 && <span className="w-px h-3.5 rounded-full" style={{ background: "hsl(var(--border))" }} />}
+                    <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: "hsl(var(--primary)/0.55)" }} />
                     {t}
                   </span>
                 ))}
@@ -190,20 +295,20 @@ export function HeroSection() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2.8, duration: 1 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1.5"
-        style={{ color: "hsl(var(--muted-foreground)/0.5)" }}
+        transition={{ delay: 3.2, duration: 1 }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
+        style={{ color: "hsl(var(--muted-foreground)/0.45)" }}
       >
-        <span className="text-[10px] font-semibold tracking-[0.18em] uppercase">Scroll</span>
+        <span className="text-[9px] font-bold tracking-[0.22em] uppercase">Scroll</span>
         <ChevronDown className="w-4 h-4 animate-bounce" />
       </motion.div>
 
       {/* Bottom fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-40 pointer-events-none z-[3]"
-        style={{ background: "linear-gradient(to top, hsl(var(--background)), transparent)" }} />
-
-      {/* Bottom divider */}
-      <div className="absolute bottom-0 left-0 right-0 divider-glow pointer-events-none z-[3]" />
+      <div
+        className="absolute bottom-0 left-0 right-0 h-48 pointer-events-none z-[4]"
+        style={{ background: "linear-gradient(to top, hsl(var(--background)), transparent)" }}
+      />
+      <div className="absolute bottom-0 left-0 right-0 divider-glow pointer-events-none z-[4]" />
     </section>
   );
 }
