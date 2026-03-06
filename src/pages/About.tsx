@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import { CTABanner } from "@/components/sections/CTABanner";
-import { Target, Layers, Users, Zap, Award, Shield, Globe, Code2, BarChart3, Bot, Figma, Database } from "lucide-react";
+import { Target, Layers, Users, Zap, Award, Shield } from "lucide-react";
 import { Link } from "react-router-dom";
-import { ArrowUpRight, Star } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 const values = [
   { icon: Target, title: "Outcome-obsessed", accent: "primary",
@@ -30,24 +30,6 @@ const stats = [
   { value: "3×",   label: "Average revenue lift", accent: "cyan" },
   { value: "48h",  label: "Strategy turnaround", accent: "violet" },
   { value: "100%", label: "Asset ownership", accent: "primary" },
-];
-
-const toolStack = [
-  { name: "React / Next.js", icon: Code2,    accent: "primary" },
-  { name: "Figma Design",    icon: Figma,    accent: "cyan" },
-  { name: "Shopify Plus",    icon: Globe,    accent: "violet" },
-  { name: "Meta + Google",   icon: BarChart3,accent: "primary" },
-  { name: "AI / OpenAI",     icon: Bot,      accent: "cyan" },
-  { name: "PostgreSQL",      icon: Database, accent: "violet" },
-  { name: "Webflow",         icon: Globe,    accent: "primary" },
-  { name: "Klaviyo",         icon: Zap,      accent: "cyan" },
-];
-
-const howWeWorkSteps = [
-  { num: "01", title: "Listen first", desc: "We understand your goals, constraints, and what has or hasn't worked before." },
-  { num: "02", title: "Strategy before execution", desc: "We map the system before building anything — you approve the plan before we start." },
-  { num: "03", title: "Build with visibility", desc: "Milestone-based delivery means you see progress at every stage, not just the end." },
-  { num: "04", title: "Deliver and handover", desc: "You own all assets. Full documentation and training are standard, not an add-on." },
 ];
 
 const About = () => {
@@ -98,7 +80,8 @@ const About = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="text-center lg:text-left">
+                className="text-center lg:text-left"
+              >
                 <div className="text-4xl lg:text-5xl font-black mb-1" style={{ color: accentColors[stat.accent] }}>
                   {stat.value}
                 </div>
@@ -109,19 +92,20 @@ const About = () => {
         </div>
       </section>
 
-      {/* ── Founder story + portrait ── */}
+      {/* ── Story — visual split layout ── */}
       <section className="py-24" style={{ background: "hsl(var(--background))" }}>
         <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
 
-            {/* Visual: studio portrait placeholder */}
+            {/* Visual panel */}
             <motion.div
               initial={{ opacity: 0, x: -40 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 1.0, ease: [0.22, 1, 0.36, 1] }}
-              className="relative">
-              {/* Main portrait card */}
+              className="relative"
+            >
+              {/* Main card */}
               <div className="aspect-[4/5] rounded-3xl overflow-hidden relative"
                 style={{
                   background: "linear-gradient(135deg, hsl(214 100% 50% / 0.07), hsl(188 97% 44% / 0.05), hsl(255 82% 62% / 0.06))",
@@ -129,7 +113,7 @@ const About = () => {
                   boxShadow: "0 24px 80px hsl(214 100% 50% / 0.10)",
                 }}>
                 <div className="absolute inset-0 flex flex-col items-center justify-center p-8">
-                  {/* Brand mark with pulse */}
+                  {/* Brand mark */}
                   <motion.div
                     animate={{ boxShadow: ["0 8px 40px hsl(214 100% 50% / 0.25)", "0 12px 60px hsl(214 100% 50% / 0.42)", "0 8px 40px hsl(214 100% 50% / 0.25)"] }}
                     transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
@@ -138,21 +122,19 @@ const About = () => {
                     <span className="text-5xl font-black text-white">N</span>
                   </motion.div>
                   <p className="text-2xl font-black mb-1" style={{ color: "hsl(var(--foreground))" }}>Nexon Growth</p>
-                  <p className="text-sm font-medium mb-6" style={{ color: "hsl(var(--muted-foreground))" }}>Growth-Focused Digital Agency</p>
-                  {/* Rating */}
-                  <div className="flex items-center gap-1.5 mb-2">
-                    {[1,2,3,4,5].map(s => <Star key={s} className="w-4 h-4 fill-amber-400 text-amber-400" />)}
-                    <span className="text-sm font-bold ml-1" style={{ color: "hsl(var(--foreground))" }}>5.0</span>
-                  </div>
-                  <p className="text-xs text-muted-foreground">from 40+ client reviews</p>
+                  <p className="text-sm font-medium" style={{ color: "hsl(var(--muted-foreground))" }}>Growth-Focused Digital Agency</p>
+
                   {/* Orbiting rings */}
                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full pointer-events-none"
                     style={{ border: "1px dashed hsl(var(--primary)/0.20)", animation: "spin-slow 22s linear infinite" }} />
                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 rounded-full pointer-events-none"
                     style={{ border: "1px dashed hsl(var(--violet)/0.12)", animation: "spin-slow 38s linear infinite reverse" }} />
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full pointer-events-none"
+                    style={{ border: "1px solid hsl(var(--cyan)/0.07)", animation: "spin-slow 55s linear infinite" }} />
                 </div>
               </div>
-              {/* Floating chips */}
+
+              {/* Floating stat chips */}
               {[
                 { value: "3×", label: "Revenue lift", color: "hsl(var(--primary))", pos: { top: "14%", right: "-15%" } },
                 { value: "48h", label: "Fast delivery", color: "hsl(var(--cyan))", pos: { bottom: "28%", right: "-18%" } },
@@ -170,12 +152,13 @@ const About = () => {
               ))}
             </motion.div>
 
-            {/* Story copy */}
+            {/* Text content */}
             <motion.div
               initial={{ opacity: 0, x: 40 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 1.0, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}>
+              transition={{ duration: 1.0, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            >
               <div className="flex items-center gap-3 mb-7">
                 <div className="h-px w-10" style={{ background: "linear-gradient(to right, hsl(var(--primary)), hsl(var(--cyan)))" }} />
                 <span className="text-[11px] font-bold uppercase tracking-[0.2em]" style={{ color: "hsl(var(--primary))" }}>Our Story</span>
@@ -203,60 +186,20 @@ const About = () => {
         </div>
       </section>
 
-      {/* ── How We Work — timeline with visuals ── */}
-      <section className="py-24" style={{ background: "hsl(220 30% 97%)" }}>
-        <div className="divider-glow absolute top-0 left-0 right-0" />
+      {/* ── Values visual grid ── */}
+      <section className="py-24" style={{ background: "hsl(220 30% 98%)" }}>
+        <div className="absolute top-0 left-0 right-0 divider-glow" />
         <div className="container">
-          <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}
-            className="max-w-xl mb-16">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="h-px w-10" style={{ background: "linear-gradient(to right, hsl(var(--primary)), hsl(var(--cyan)))" }} />
-              <span className="text-[11px] font-bold uppercase tracking-[0.2em]" style={{ color: "hsl(var(--primary))" }}>How We Work</span>
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-black mb-4">
-              A process built for{" "}
-              <span style={{
-                background: "linear-gradient(130deg, hsl(var(--primary)), hsl(var(--cyan)))",
-                WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
-              }}>clarity</span>
-            </h2>
-            <p className="text-base text-muted-foreground leading-relaxed">We don't just execute — we execute with a system. Here's what working with us actually looks like.</p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {howWeWorkSteps.map((step, i) => {
-              const accent = i % 2 === 0 ? "hsl(var(--primary))" : i % 3 === 1 ? "hsl(var(--cyan))" : "hsl(var(--violet))";
-              return (
-                <motion.div key={step.num}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: i * 0.1 }}
-                  className="flex gap-5 p-7 rounded-3xl"
-                  style={{ background: "hsl(220 20% 100%)", border: "1px solid hsl(var(--border))" }}>
-                  <div className="flex-shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center"
-                    style={{ background: accent.replace(")", "/0.10)"), border: `1.5px solid ${accent.replace(")", "/0.22)")}` }}>
-                    <span className="text-xs font-black" style={{ color: accent }}>{step.num}</span>
-                  </div>
-                  <div>
-                    <h3 className="text-base font-bold mb-2" style={{ color: "hsl(var(--foreground))" }}>{step.title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{step.desc}</p>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Values grid ── */}
-      <section className="py-24" style={{ background: "hsl(var(--background))" }}>
-        <div className="container">
-          <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}
-            className="text-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="text-center mb-16"
+          >
             <div className="flex items-center justify-center gap-3 mb-6">
               <div className="h-px w-10" style={{ background: "linear-gradient(to right, hsl(var(--primary)), hsl(var(--cyan)))" }} />
-              <span className="text-[11px] font-bold uppercase tracking-[0.2em]" style={{ color: "hsl(var(--primary))" }}>Principles</span>
+              <span className="text-[11px] font-bold uppercase tracking-[0.2em]" style={{ color: "hsl(var(--primary))" }}>What Makes Us Different</span>
               <div className="h-px w-10" style={{ background: "linear-gradient(to left, hsl(var(--primary)), hsl(var(--cyan)))" }} />
             </div>
             <h2 className="text-3xl sm:text-4xl font-black">
@@ -281,56 +224,18 @@ const About = () => {
                   className="group relative rounded-2xl overflow-hidden transition-all duration-400"
                   style={{ background: "hsl(220 20% 100%)", border: "1px solid hsl(var(--border))", padding: "28px" }}
                   onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.borderColor = accent.replace(")", "/0.30)"); el.style.boxShadow = `0 16px 56px ${accent.replace(")", "/0.10)")}`; el.style.transform = "translateY(-4px)"; }}
-                  onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.borderColor = "hsl(var(--border))"; el.style.boxShadow = ""; el.style.transform = ""; }}>
+                  onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.borderColor = "hsl(var(--border))"; el.style.boxShadow = ""; el.style.transform = ""; }}
+                >
+                  {/* Top accent */}
                   <div className="absolute top-0 left-0 right-0 h-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-400 rounded-t-2xl"
                     style={{ background: `linear-gradient(to right, ${accent}, transparent)` }} />
+
                   <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300"
                     style={{ background: accent.replace(")", "/0.10)"), border: `1.5px solid ${accent.replace(")", "/0.22)")}` }}>
                     <Icon className="w-5 h-5" style={{ color: accent }} />
                   </div>
                   <h3 className="text-base font-bold mb-2.5" style={{ color: "hsl(var(--foreground))" }}>{v.title}</h3>
                   <p className="text-sm leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>{v.desc}</p>
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Tools & Stack ── */}
-      <section className="py-24" style={{ background: "hsl(220 30% 97%)" }}>
-        <div className="divider-glow absolute top-0 left-0 right-0" />
-        <div className="container">
-          <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}
-            className="text-center mb-12">
-            <div className="flex items-center justify-center gap-3 mb-6">
-              <div className="h-px w-10" style={{ background: "linear-gradient(to right, hsl(var(--primary)), hsl(var(--cyan)))" }} />
-              <span className="text-[11px] font-bold uppercase tracking-[0.2em]" style={{ color: "hsl(var(--primary))" }}>Tools & Stack</span>
-              <div className="h-px w-10" style={{ background: "linear-gradient(to left, hsl(var(--primary)), hsl(var(--cyan)))" }} />
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-black mb-3">The tools we use to build and grow</h2>
-            <p className="text-base text-muted-foreground max-w-md mx-auto">Best-in-class tools selected for performance, reliability, and client ownership.</p>
-          </motion.div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            {toolStack.map((tool, i) => {
-              const Icon = tool.icon;
-              const accent = accentColors[tool.accent];
-              return (
-                <motion.div key={tool.name}
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.06 }}
-                  className="group flex items-center gap-3 p-5 rounded-2xl transition-all duration-300"
-                  style={{ background: "hsl(220 20% 100%)", border: "1px solid hsl(var(--border))" }}
-                  onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.borderColor = accent.replace(")", "/0.30)"); el.style.boxShadow = `0 8px 30px ${accent.replace(")", "/0.10)")}`; el.style.transform = "translateY(-2px)"; }}
-                  onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.borderColor = "hsl(var(--border))"; el.style.boxShadow = ""; el.style.transform = ""; }}>
-                  <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-                    style={{ background: accent.replace(")", "/0.10)"), border: `1px solid ${accent.replace(")", "/0.18)")}` }}>
-                    <Icon className="w-4 h-4" style={{ color: accent }} />
-                  </div>
-                  <span className="text-sm font-semibold" style={{ color: "hsl(var(--foreground))" }}>{tool.name}</span>
                 </motion.div>
               );
             })}
