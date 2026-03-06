@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { Send, CheckCircle } from "lucide-react";
+import { Send, CheckCircle, Shield, Clock, Star } from "lucide-react";
 import { useState } from "react";
 
 const schema = z.object({
@@ -58,10 +58,9 @@ export function LeadForm({ compact = false }: { compact?: boolean }) {
       <motion.div
         initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="flex flex-col items-center justify-center py-20 text-center"
-      >
-        <div className="w-18 h-18 w-[72px] h-[72px] rounded-full flex items-center justify-center mb-6 shadow-glow-blue"
-          style={{ background: "hsl(var(--primary) / 0.12)", border: "1px solid hsl(var(--primary) / 0.3)" }}>
+        className="flex flex-col items-center justify-center py-20 text-center">
+        <div className="w-[72px] h-[72px] rounded-full flex items-center justify-center mb-6"
+          style={{ background: "hsl(var(--primary) / 0.12)", border: "1px solid hsl(var(--primary) / 0.3)", boxShadow: "0 0 40px hsl(var(--primary) / 0.18)" }}>
           <CheckCircle className="w-9 h-9 text-primary" />
         </div>
         <h3 className="text-2xl font-bold mb-3">Proposal request received</h3>
@@ -112,8 +111,7 @@ export function LeadForm({ compact = false }: { compact?: boolean }) {
       <div className={cn("grid gap-4", compact ? "grid-cols-1" : "grid-cols-1 sm:grid-cols-3")}>
         {[
           {
-            id: "service",
-            label: "Service Needed",
+            id: "service", label: "Service Needed",
             options: [
               { value: "", label: "Select a service" },
               { value: "web-development", label: "Web Development" },
@@ -125,8 +123,7 @@ export function LeadForm({ compact = false }: { compact?: boolean }) {
             ],
           },
           {
-            id: "budget",
-            label: "Budget Range",
+            id: "budget", label: "Budget Range",
             options: [
               { value: "", label: "Select budget" },
               { value: "under-5k", label: "Under $5,000" },
@@ -137,8 +134,7 @@ export function LeadForm({ compact = false }: { compact?: boolean }) {
             ],
           },
           {
-            id: "timeline",
-            label: "Project Timeline",
+            id: "timeline", label: "Project Timeline",
             options: [
               { value: "", label: "Select timeline" },
               { value: "asap", label: "As soon as possible" },
@@ -156,8 +152,7 @@ export function LeadForm({ compact = false }: { compact?: boolean }) {
               {...register(id as keyof FormData)}
               style={{ ...selectStyle, ...fieldStyle(id) }}
               onFocus={() => setFocused(id)}
-              onBlur={() => setFocused(null)}
-            >
+              onBlur={() => setFocused(null)}>
               {options.map(o => <option key={o.value} value={o.value} style={{ background: "hsl(220 30% 100%)" }}>{o.label}</option>)}
             </select>
             {errors[id as keyof FormData] && (
@@ -185,9 +180,8 @@ export function LeadForm({ compact = false }: { compact?: boolean }) {
       <Button
         type="submit"
         disabled={isSubmitting}
-        className="relative self-start px-8 h-12 text-base font-bold shadow-button-glow overflow-hidden group"
-        style={{ background: "hsl(var(--primary))", color: "hsl(var(--primary-foreground))" }}
-      >
+        className="relative self-start px-8 h-12 text-base font-bold overflow-hidden group rounded-xl"
+        style={{ background: "hsl(var(--primary))", color: "hsl(var(--primary-foreground))", boxShadow: "0 4px 24px hsl(var(--primary) / 0.35)" }}>
         {isSubmitting ? (
           <span className="flex items-center gap-2">
             <span className="w-4 h-4 rounded-full border-2 border-primary-foreground/30 border-t-primary-foreground animate-spin" />
@@ -205,49 +199,85 @@ export function LeadForm({ compact = false }: { compact?: boolean }) {
   );
 }
 
+const trustSignals = [
+  { icon: Shield, label: "No obligation", sub: "Free consultation" },
+  { icon: Clock,  label: "24h response", sub: "Fast turnaround" },
+  { icon: Star,   label: "5.0 rated",    sub: "40+ client reviews" },
+];
+
 export function LeadFormSection() {
   return (
-    <section id="proposal" className="section-padding relative overflow-hidden"
-      style={{ background: "hsl(var(--background))" }}>
+    <section id="proposal" className="relative overflow-hidden"
+      style={{ background: "hsl(220 25% 96%)", paddingTop: "clamp(80px,10vw,140px)", paddingBottom: "clamp(80px,10vw,140px)" }}>
       <div className="divider-glow absolute top-0 left-0 right-0" />
-      <div className="absolute top-0 left-0 w-[500px] h-[400px] orb-blue opacity-[0.05] pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-[400px] h-[300px] orb-violet opacity-[0.04] pointer-events-none" />
+      {/* Animated gradient blobs */}
+      <div className="absolute top-0 left-0 w-[500px] h-[400px] pointer-events-none animate-orb-float"
+        style={{ background: "radial-gradient(ellipse, hsl(214 100% 50% / 0.08) 0%, transparent 70%)", filter: "blur(60px)" }} />
+      <div className="absolute bottom-0 right-0 w-[400px] h-[350px] pointer-events-none animate-orb-float"
+        style={{ background: "radial-gradient(ellipse, hsl(255 82% 62% / 0.06) 0%, transparent 70%)", filter: "blur(60px)", animationDelay: "3s" }} />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] pointer-events-none"
+        style={{ background: "radial-gradient(ellipse, hsl(188 97% 44% / 0.04) 0%, transparent 65%)", filter: "blur(80px)" }} />
 
       <div className="container relative z-10">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-5xl mx-auto">
+          {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="text-center mb-12"
-          >
+            className="text-center mb-12">
             <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] mb-5"
               style={{ color: "hsl(var(--primary))" }}>
               <span className="w-6 h-px" style={{ background: "linear-gradient(to right, hsl(var(--primary)), hsl(var(--cyan)))" }} />
               Get Started
               <span className="w-6 h-px" style={{ background: "linear-gradient(to left, hsl(var(--primary)), hsl(var(--cyan)))" }} />
             </span>
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-black mb-5 leading-tight"
-              style={{ color: "hsl(var(--foreground))" }}>
+            <h2 className="font-black leading-tight mb-5" style={{ fontSize: "clamp(2.4rem,6vw,68px)", color: "hsl(var(--foreground))" }}>
               Get your free{" "}
-              <span className="text-gradient">project proposal</span>
+              <span style={{
+                background: "linear-gradient(130deg, hsl(var(--primary)), hsl(var(--cyan)))",
+                WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
+              }}>project proposal</span>
             </h2>
-            <p className="text-lg max-w-xl mx-auto leading-relaxed"
-              style={{ color: "hsl(var(--muted-foreground))" }}>
+            <p className="text-lg max-w-xl mx-auto leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>
               Tell us about your project. We'll review it and come back with a scoped proposal and honest recommendations — no obligation.
             </p>
           </motion.div>
 
+          {/* Trust signals row */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="flex flex-wrap justify-center gap-3 mb-10">
+            {trustSignals.map(({ icon: Icon, label, sub }) => (
+              <div key={label} className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl"
+                style={{ background: "hsl(220 20% 100%)", border: "1px solid hsl(var(--border))", boxShadow: "0 1px 8px hsl(220 30% 10% / 0.04)" }}>
+                <Icon className="w-4 h-4 text-primary flex-shrink-0" />
+                <div>
+                  <span className="text-xs font-bold block leading-none" style={{ color: "hsl(var(--foreground))" }}>{label}</span>
+                  <span className="text-[10px]" style={{ color: "hsl(var(--muted-foreground))" }}>{sub}</span>
+                </div>
+              </div>
+            ))}
+          </motion.div>
+
+          {/* Glass form card on gradient bg */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.15 }}
-            className="relative p-8 md:p-10 rounded-2xl overflow-hidden card-white"
-            style={{ boxShadow: "0 8px 48px hsl(220 30% 10% / 0.08), 0 2px 12px hsl(220 30% 10% / 0.04)" }}
-          >
-            <div className="relative z-10">
+            className="relative rounded-3xl overflow-hidden"
+            style={{ boxShadow: "0 24px 80px hsl(220 30% 10% / 0.10), 0 2px 12px hsl(220 30% 10% / 0.04)" }}>
+            {/* Gradient background layer */}
+            <div className="absolute inset-0"
+              style={{ background: "linear-gradient(135deg, hsl(214 100% 50% / 0.04), hsl(188 97% 44% / 0.02), hsl(255 82% 62% / 0.03))" }} />
+            {/* White glass card */}
+            <div className="relative z-10 p-8 md:p-12 rounded-3xl"
+              style={{ background: "hsl(220 20% 100% / 0.92)", border: "1px solid hsl(214 100% 50% / 0.12)", backdropFilter: "blur(20px)" }}>
               <LeadForm />
             </div>
           </motion.div>
