@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowUpRight, Star, Globe, Zap } from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowUpRight, Star, Globe, Zap, Award, BarChart3 } from "lucide-react";
 import { useRef } from "react";
+import { useScroll, useTransform } from "framer-motion";
 
 const stats = [
   { value: "3×",   label: "Avg revenue lift",    accent: "primary" },
@@ -15,7 +16,7 @@ const accentColors: Record<string, string> = {
   violet:  "hsl(var(--violet))",
 };
 
-// Visual studio scene
+// Cinematic studio/brand visual
 function StudioVisual() {
   return (
     <div className="relative w-full h-full flex items-center justify-center p-8">
@@ -26,8 +27,8 @@ function StudioVisual() {
           border: "1px solid hsl(var(--border))",
           boxShadow: "0 24px 80px hsl(214 100% 50% / 0.10)",
         }}>
-        {/* Header brand strip */}
-        <div className="relative h-36 flex items-center justify-center overflow-hidden"
+        {/* Animated brand header */}
+        <div className="relative h-40 flex items-center justify-center overflow-hidden"
           style={{ background: "linear-gradient(135deg, hsl(214 100% 50% / 0.08), hsl(188 97% 44% / 0.06), hsl(255 82% 62% / 0.05))" }}>
           {/* Orbiting rings */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full"
@@ -76,15 +77,12 @@ export function AboutTeaser() {
   const floatY = useTransform(scrollYProgress, [0, 1], ["0%", "-6%"]);
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative overflow-hidden"
+    <section ref={sectionRef} className="relative overflow-hidden"
       style={{
         background: "linear-gradient(160deg, hsl(220 35% 98%) 0%, hsl(var(--background)) 100%)",
         paddingTop: "clamp(80px,10vw,160px)",
         paddingBottom: "clamp(80px,10vw,160px)",
-      }}
-    >
+      }}>
       <div className="absolute top-0 left-0 right-0 divider-glow" />
       <div className="absolute left-1/2 top-1/4 -translate-x-1/2 w-[800px] h-[600px] pointer-events-none"
         style={{ background: "radial-gradient(ellipse, hsl(214 100% 50% / 0.05) 0%, transparent 65%)", filter: "blur(60px)" }} />
@@ -98,8 +96,7 @@ export function AboutTeaser() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 1.0, ease: [0.22, 1, 0.36, 1] }}
-            className="relative"
-          >
+            className="relative">
             <div className="relative aspect-[4/5] rounded-3xl overflow-hidden"
               style={{
                 background: "linear-gradient(135deg, hsl(214 100% 50% / 0.07), hsl(188 97% 44% / 0.04), hsl(255 82% 62% / 0.06))",
@@ -111,8 +108,7 @@ export function AboutTeaser() {
 
             {/* Floating stat chips */}
             {stats.map((stat, i) => (
-              <motion.div
-                key={stat.value}
+              <motion.div key={stat.value}
                 initial={{ opacity: 0, scale: 0.85 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
@@ -135,8 +131,7 @@ export function AboutTeaser() {
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 1.0, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
-          >
+            transition={{ duration: 1.0, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}>
             <div className="flex items-center gap-3 mb-7">
               <div className="h-px w-10" style={{ background: "linear-gradient(to right, hsl(var(--primary)), hsl(var(--cyan)))" }} />
               <span className="text-[11px] font-bold uppercase tracking-[0.2em]" style={{ color: "hsl(var(--primary))" }}>About Us</span>
@@ -161,8 +156,10 @@ export function AboutTeaser() {
             {/* Feature highlights */}
             <div className="grid grid-cols-2 gap-3 mb-10">
               {[
-                { icon: Globe, label: "Full-stack execution", color: "hsl(var(--primary))" },
-                { icon: Zap,   label: "48h strategy delivery", color: "hsl(var(--cyan))" },
+                { icon: Globe,     label: "Full-stack execution", color: "hsl(var(--primary))" },
+                { icon: Zap,       label: "48h strategy delivery", color: "hsl(var(--cyan))" },
+                { icon: Award,     label: "5.0 client rating", color: "hsl(var(--violet))" },
+                { icon: BarChart3, label: "120+ projects delivered", color: "hsl(var(--primary))" },
               ].map(item => {
                 const Icon = item.icon;
                 return (
@@ -172,7 +169,7 @@ export function AboutTeaser() {
                       style={{ background: item.color.replace(")", "/0.10)"), border: `1px solid ${item.color.replace(")", "/0.20)")}` }}>
                       <Icon className="w-4 h-4" style={{ color: item.color }} />
                     </div>
-                    <span className="text-xs font-semibold">{item.label}</span>
+                    <span className="text-xs font-semibold" style={{ color: "hsl(var(--foreground))" }}>{item.label}</span>
                   </div>
                 );
               })}
