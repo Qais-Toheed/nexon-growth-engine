@@ -101,12 +101,14 @@ export function AboutTeaser() {
             className="relative"
           >
             <motion.div style={{ y: floatY }}
-              className="relative aspect-[4/5] rounded-3xl overflow-hidden"
+          className="relative aspect-[4/5] rounded-3xl overflow-hidden"
+            >
+            <div className="absolute inset-0 rounded-3xl"
               style={{
                 background: "linear-gradient(135deg, hsl(214 100% 50% / 0.07), hsl(188 97% 44% / 0.04), hsl(255 82% 62% / 0.06))",
                 border: "1px solid hsl(var(--border))",
                 boxShadow: "0 24px 80px hsl(214 100% 50% / 0.08)",
-              }}>
+              }} />
               <StudioVisual />
             </motion.div>
 
