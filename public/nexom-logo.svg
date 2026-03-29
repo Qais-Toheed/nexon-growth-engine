@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 140" role="img" aria-label="Nexom Growth logo">
+  <defs>
+    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00D1FF" />
+      <stop offset="100%" stop-color="#316BFF" />
+    </linearGradient>
+  </defs>
+  <rect width="520" height="140" fill="none" />
+  <g transform="translate(14,14)">
+    <rect x="0" y="0" width="112" height="112" rx="24" fill="#0B1020" />
+    <path d="M24 84V28L56 64V28H88V84L56 48V84H24Z" fill="url(#logoGrad)" />
+    <path d="M16 18H96" stroke="#1D2A4B" stroke-width="2" opacity="0.6" />
+    <path d="M16 94H96" stroke="#1D2A4B" stroke-width="2" opacity="0.6" />
+  </g>
+  <g transform="translate(150,42)">
+    <text x="0" y="28" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="42" font-weight="700" fill="#111827">Nexom</text>
+    <text x="0" y="66" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="28" font-weight="500" fill="#2563EB">Growth</text>
+    <path d="M194 20H320" stroke="#93C5FD" stroke-width="3" stroke-linecap="round" />
+    <circle cx="328" cy="20" r="4" fill="#60A5FA" />
+  </g>
+</svg>
