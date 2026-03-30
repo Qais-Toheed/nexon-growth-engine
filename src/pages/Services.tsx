@@ -1,19 +1,19 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Globe, Smartphone, TrendingUp, ShoppingBag, Bot, Sparkles } from "lucide-react";
+import { ArrowRight, Globe, BarChart3, Share2, Palette, Video, Sparkles } from "lucide-react";
 import { servicesSummary } from "@/data/services";
 import { CTABanner } from "@/components/sections/CTABanner";
 
 const iconMap: Record<string, React.ElementType> = {
-  Globe, Smartphone, TrendingUp, ShoppingBag, Bot,
+  Globe, BarChart3, Share2, Palette, Video,
 };
 
 const configs = [
-  { accent: "hsl(var(--primary))", grad: ["#0080FF","#52A8FF"],  num: "01", tag: "Web & Mobile",  bar: "#0080FF" },
-  { accent: "hsl(var(--cyan))",    grad: ["#09BDD6","#6FE0F0"],  num: "02", tag: "Paid Media",    bar: "#09BDD6" },
-  { accent: "hsl(var(--violet))",  grad: ["#7A52F4","#B09AFF"],  num: "03", tag: "Ecommerce",     bar: "#7A52F4" },
-  { accent: "hsl(var(--primary))", grad: ["#0080FF","#52A8FF"],  num: "04", tag: "AI Systems",    bar: "#0080FF" },
-  { accent: "hsl(var(--cyan))",    grad: ["#09BDD6","#6FE0F0"],  num: "05", tag: "Strategy",      bar: "#09BDD6" },
+  { accent: "hsl(var(--primary))", grad: ["#0080FF","#52A8FF"],  num: "01", tag: "Paid Ads",     bar: "#0080FF" },
+  { accent: "hsl(var(--cyan))",    grad: ["#09BDD6","#6FE0F0"],  num: "02", tag: "Social Media", bar: "#09BDD6" },
+  { accent: "hsl(var(--violet))",  grad: ["#7A52F4","#B09AFF"],  num: "03", tag: "Web Dev",      bar: "#7A52F4" },
+  { accent: "hsl(var(--primary))", grad: ["#0080FF","#52A8FF"],  num: "04", tag: "Design",       bar: "#0080FF" },
+  { accent: "hsl(var(--cyan))",    grad: ["#09BDD6","#6FE0F0"],  num: "05", tag: "Video",        bar: "#09BDD6" },
 ];
 
 const Services = () => {
@@ -80,15 +80,24 @@ const Services = () => {
                     <div className="w-32 lg:w-40 flex-shrink-0 flex items-center justify-center relative overflow-hidden"
                       style={{ background: `linear-gradient(135deg, ${c.accent.replace(")", "/0.08)")}, ${c.accent.replace(")", "/0.03)")})` }}>
                       {/* Number watermark */}
-                      <span className="absolute text-7xl font-black opacity-6 select-none"
-                        style={{ color: c.accent, fontSize: "clamp(56px, 6vw, 80px)" }}>{c.num}</span>
+                      <span
+                        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-0 select-none pointer-events-none"
+                        style={{
+                          color: c.accent,
+                          fontSize: "clamp(56px, 6vw, 80px)",
+                          opacity: 0.18,
+                          top: "58%",
+                        }}
+                      >
+                        {c.num}
+                      </span>
                       {/* Icon */}
-                      <div className="relative w-14 h-14 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-400"
+                      <div className="relative z-10 w-14 h-14 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-400"
                         style={{ background: c.accent.replace(")", "/0.12)"), border: `1.5px solid ${c.accent.replace(")", "/0.25)")}` }}>
                         <Icon className="w-7 h-7" style={{ color: c.accent }} />
                       </div>
                       {/* Subtle animated orb */}
-                      <div className="absolute bottom-2 right-2 w-6 h-6 rounded-full opacity-20"
+                      <div className="absolute bottom-2 right-2 z-0 w-6 h-6 rounded-full opacity-20"
                         style={{ background: c.accent, animation: "float 6s ease-in-out infinite", animationDelay: `${i * 0.5}s` }} />
                     </div>
 
@@ -132,7 +141,7 @@ const Services = () => {
                 <h3 className="text-lg font-black">Not sure what you need?</h3>
               </div>
               <p className="text-muted-foreground text-sm max-w-md">
-                Most businesses need a combination. Book a free strategy call and we'll map out exactly what would have the most impact.
+                Most businesses need a combination. Chat with us on WhatsApp and we'll help you figure out exactly what would have the most impact.
               </p>
             </div>
             <Link to="/contact"
@@ -141,7 +150,7 @@ const Services = () => {
               onMouseEnter={e => { (e.currentTarget as HTMLElement).style.boxShadow = "0 8px 40px hsl(214 100% 50% / 0.42)"; (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; }}
               onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 24px hsl(214 100% 50% / 0.28)"; (e.currentTarget as HTMLElement).style.transform = ""; }}
             >
-              Book a free discovery call
+              Get a free consultation
               <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
             </Link>
           </motion.div>

@@ -2,6 +2,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle } from "lucide-react";
 import { useState } from "react";
 
+const WHATSAPP_PRIMARY = "923094278123";
+
 export function FloatingWhatsApp() {
   const [hovered, setHovered] = useState(false);
 
@@ -23,7 +25,7 @@ export function FloatingWhatsApp() {
         )}
       </AnimatePresence>
       <motion.a
-        href="https://wa.me/1234567890"
+        href={`https://wa.me/${WHATSAPP_PRIMARY}?text=${encodeURIComponent("Hi Nexon Growth! I'm interested in your services and would like to discuss a project.")}`}
         target="_blank"
         rel="noopener noreferrer"
         onMouseEnter={() => setHovered(true)}

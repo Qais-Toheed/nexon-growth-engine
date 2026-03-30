@@ -1,26 +1,26 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ChevronDown, Globe, Smartphone, TrendingUp, ShoppingBag, Bot, ArrowRight } from "lucide-react";
+import { Menu, X, ChevronDown, Globe, BarChart3, Share2, Palette, Video, ArrowRight, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const serviceLinks = [
-  { label: "Web Development",   href: "/services/web-development",   icon: Globe,        desc: "Websites built to convert" },
-  { label: "App Development",   href: "/services/app-development",   icon: Smartphone,   desc: "Mobile apps that perform" },
-  { label: "Digital Marketing", href: "/services/digital-marketing", icon: TrendingUp,   desc: "Meta & Google campaigns" },
-  { label: "Shopify Ecommerce", href: "/services/shopify-ecommerce", icon: ShoppingBag,  desc: "Stores built to sell" },
-  { label: "AI Automation",     href: "/services/ai-automation",     icon: Bot,          desc: "Systems that scale for you" },
+  { label: "Performance Marketing", href: "/services/performance-marketing", icon: BarChart3,  desc: "Paid campaigns that convert" },
+  { label: "Social Media Handling",  href: "/services/social-media-handling",  icon: Share2,     desc: "Strategic social presence" },
+  { label: "Website Development",    href: "/services/website-development",    icon: Globe,      desc: "Websites built to convert" },
+  { label: "Graphic Designing",      href: "/services/graphic-designing",      icon: Palette,    desc: "Design that builds trust" },
+  { label: "Video Editing",          href: "/services/video-editing",          icon: Video,      desc: "Content that stops the scroll" },
 ];
 
 const navLinks = [
   { label: "Home",      href: "/" },
   { label: "Services",  href: "/services", hasDropdown: true },
-  { label: "Portfolio", href: "/portfolio" },
   { label: "About",     href: "/about" },
-  { label: "Blog",      href: "/blog" },
   { label: "Contact",   href: "/contact" },
 ];
+
+const WHATSAPP_PRIMARY = "923094278123";
 
 export function Navigation() {
   const [scrolled, setScrolled]       = useState(false);
@@ -161,10 +161,19 @@ export function Navigation() {
 
           {/* Desktop CTAs */}
           <div className="hidden md:flex items-center gap-2.5">
-            <Button asChild variant="ghost" size="sm"
-              className="font-semibold text-sm"
-              style={{ color: "hsl(var(--muted-foreground))" }}>
-              <Link to="/contact">Get Proposal</Link>
+            <Button asChild size="sm"
+              className="relative font-bold overflow-hidden group text-sm px-4 rounded-xl"
+              style={{
+                background: "linear-gradient(135deg, #1DA851, #25D366)",
+                color: "white",
+                boxShadow: "0 2px 16px hsl(142 70% 45% / 0.3)",
+              }}
+            >
+              <a href={`https://wa.me/${WHATSAPP_PRIMARY}?text=${encodeURIComponent("Hi Nexon Growth! I'm interested in your services and would like to discuss a project.")}`} target="_blank" rel="noopener noreferrer">
+                <MessageCircle className="w-3.5 h-3.5" />
+                Chat on WhatsApp
+                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600" />
+              </a>
             </Button>
             <Button asChild size="sm"
               className="relative font-bold overflow-hidden group text-sm px-4 rounded-xl"
@@ -252,12 +261,15 @@ export function Navigation() {
                 ))}
               </nav>
               <div className="flex flex-col gap-2.5 mt-6">
-                <Button asChild variant="outline" className="w-full font-semibold">
-                  <Link to="/contact">Get Proposal</Link>
-                </Button>
                 <Button asChild className="w-full font-bold rounded-xl"
-                  style={{ background: "hsl(var(--primary))", color: "white", boxShadow: "0 2px 16px hsl(214 100% 50% / 0.3)" }}>
-                  <a href="https://calendly.com" target="_blank" rel="noopener noreferrer">Book a Free Call</a>
+                  style={{ background: "linear-gradient(135deg, #1DA851, #25D366)", color: "white" }}>
+                  <a href={`https://wa.me/${WHATSAPP_PRIMARY}?text=${encodeURIComponent("Hi Nexon Growth! I'm interested in your services and would like to discuss a project.")}`} target="_blank" rel="noopener noreferrer">
+                    <MessageCircle className="w-4 h-4" />
+                    Chat on WhatsApp
+                  </a>
+                </Button>
+                <Button asChild variant="outline" className="w-full font-semibold">
+                  <a href="https://calendly.com" target="_blank" rel="noopener noreferrer">Book a Call</a>
                 </Button>
               </div>
             </motion.div>

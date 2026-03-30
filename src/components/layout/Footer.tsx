@@ -1,20 +1,20 @@
 import { Link } from "react-router-dom";
-import { Mail, MessageCircle, ArrowUpRight, Twitter, Linkedin, Instagram } from "lucide-react";
+import { Mail, MessageCircle, Phone, ArrowUpRight, Twitter, Linkedin, Instagram } from "lucide-react";
+
+const WHATSAPP_PRIMARY = "923094278123";
 
 const footerServices = [
-  { label: "Web Development",   href: "/services/web-development" },
-  { label: "App Development",   href: "/services/app-development" },
-  { label: "Digital Marketing", href: "/services/digital-marketing" },
-  { label: "Shopify Ecommerce", href: "/services/shopify-ecommerce" },
-  { label: "AI Automation",     href: "/services/ai-automation" },
+  { label: "Performance Marketing", href: "/services/performance-marketing" },
+  { label: "Social Media Handling",  href: "/services/social-media-handling" },
+  { label: "Website Development",    href: "/services/website-development" },
+  { label: "Graphic Designing",      href: "/services/graphic-designing" },
+  { label: "Video Editing",          href: "/services/video-editing" },
 ];
 
 const footerNav = [
   { label: "Home",      href: "/" },
   { label: "Services",  href: "/services" },
-  { label: "Portfolio", href: "/portfolio" },
   { label: "About",     href: "/about" },
-  { label: "Blog",      href: "/blog" },
   { label: "Contact",   href: "/contact" },
 ];
 
@@ -45,11 +45,11 @@ export function Footer() {
               </span>
             </Link>
             <p className="text-sm leading-relaxed mb-7" style={{ color: "hsl(218 22% 58%)" }}>
-              A growth-focused digital agency building websites, apps, marketing systems, and AI automations that help ambitious businesses scale.
+              A growth-focused digital agency specializing in performance marketing, social media, website development, graphic design, and video editing.
             </p>
 
             <div className="flex flex-col gap-3">
-              <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer"
+              <a href={`https://wa.me/${WHATSAPP_PRIMARY}?text=${encodeURIComponent("Hi Nexon Growth! I'd like to discuss a project.")}`} target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center gap-2.5 text-sm transition-colors group"
                 style={{ color: "hsl(218 22% 55%)" }}
                 onMouseEnter={e => (e.currentTarget.style.color = "hsl(210 55% 92%)")}
@@ -61,6 +61,33 @@ export function Footer() {
                 </div>
                 WhatsApp
               </a>
+
+              <a href="tel:+923094278123"
+                className="inline-flex items-center gap-2.5 text-sm transition-colors group"
+                style={{ color: "hsl(218 22% 55%)" }}
+                onMouseEnter={e => (e.currentTarget.style.color = "hsl(210 55% 92%)")}
+                onMouseLeave={e => (e.currentTarget.style.color = "hsl(218 22% 55%)")}
+              >
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center border transition-all duration-200 group-hover:border-primary/40"
+                  style={{ background: "hsl(228 40% 14%)", borderColor: "hsl(228 32% 18%)" }}>
+                  <Phone className="w-4 h-4" style={{ color: "hsl(214 100% 60%)" }} />
+                </div>
+                +92 309 4278123
+              </a>
+
+              <a href="tel:+923036091877"
+                className="inline-flex items-center gap-2.5 text-sm transition-colors group"
+                style={{ color: "hsl(218 22% 55%)" }}
+                onMouseEnter={e => (e.currentTarget.style.color = "hsl(210 55% 92%)")}
+                onMouseLeave={e => (e.currentTarget.style.color = "hsl(218 22% 55%)")}
+              >
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center border transition-all duration-200 group-hover:border-primary/40"
+                  style={{ background: "hsl(228 40% 14%)", borderColor: "hsl(228 32% 18%)" }}>
+                  <Phone className="w-4 h-4" style={{ color: "hsl(214 100% 60%)" }} />
+                </div>
+                +92 303 6091877
+              </a>
+
               <a href="mailto:hello@nexongrowth.com"
                 className="inline-flex items-center gap-2.5 text-sm transition-colors group"
                 style={{ color: "hsl(218 22% 55%)" }}
@@ -119,15 +146,26 @@ export function Footer() {
           <div>
             <h4 className="text-xs font-bold uppercase tracking-widest mb-5 text-white">Get In Touch</h4>
             <p className="text-sm leading-relaxed mb-5" style={{ color: "hsl(218 22% 55%)" }}>
-              Ready to build something that grows? Start with a free strategy call — no obligation.
+              Ready to build something that grows? Chat with us on WhatsApp for the fastest response.
             </p>
+            <a href={`https://wa.me/${WHATSAPP_PRIMARY}?text=${encodeURIComponent("Hi Nexon Growth! I'm interested in your services.")}`} target="_blank" rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm font-bold transition-all group mb-3"
+              style={{ color: "#25D366" }}
+              onMouseEnter={e => (e.currentTarget.style.color = "#4AE680")}
+              onMouseLeave={e => (e.currentTarget.style.color = "#25D366")}
+            >
+              <MessageCircle className="w-4 h-4" />
+              Chat on WhatsApp
+              <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            </a>
+            <br />
             <a href="https://calendly.com" target="_blank" rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-sm font-bold transition-colors group"
               style={{ color: "hsl(214 100% 65%)" }}
               onMouseEnter={e => (e.currentTarget.style.color = "hsl(214 100% 75%)")}
               onMouseLeave={e => (e.currentTarget.style.color = "hsl(214 100% 65%)")}
             >
-              Book a Free Strategy Call
+              Book a Strategy Call
               <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </a>
 

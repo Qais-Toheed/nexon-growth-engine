@@ -1,5 +1,7 @@
 import { Phone, MessageCircle } from "lucide-react";
 
+const WHATSAPP_PRIMARY = "923094278123";
+
 export function MobileStickyBar() {
   return (
     <div className="fixed bottom-0 left-0 right-0 z-40 md:hidden px-4 py-3 flex items-center gap-2.5"
@@ -10,7 +12,7 @@ export function MobileStickyBar() {
         WebkitBackdropFilter: "blur(20px)",
       }}>
       <a
-        href="https://wa.me/1234567890"
+        href={`https://wa.me/${WHATSAPP_PRIMARY}?text=${encodeURIComponent("Hi Nexon Growth! I'd like to discuss a project with you.")}`}
         target="_blank"
         rel="noopener noreferrer"
         className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold text-white transition-all duration-200"

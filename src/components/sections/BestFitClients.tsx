@@ -71,7 +71,7 @@ export function BestFitClients() {
       <div className="container relative z-10">
 
         {/* Header */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-24 items-end">
+        <div className="flex flex-col lg:flex-row lg:items-end gap-6 lg:gap-10 mb-16 lg:mb-24">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -127,12 +127,11 @@ export function BestFitClients() {
               >
                 <Link
                   to="/contact"
-                  className="group flex flex-col sm:flex-row items-start sm:items-center gap-6 lg:gap-10 p-8 lg:p-10 rounded-3xl transition-all duration-400 relative overflow-hidden"
+                  className="group flex flex-col sm:flex-row items-stretch sm:items-center gap-5 sm:gap-6 lg:gap-10 p-6 sm:p-8 lg:p-10 rounded-3xl transition-all duration-400 relative overflow-hidden"
                   style={{
                     background: "hsl(220 20% 100%)",
                     border: "1px solid hsl(var(--border))",
                     boxShadow: "0 2px 20px hsl(220 30% 10% / 0.05)",
-                    flexDirection: isRight ? "row-reverse" : "row",
                   }}
                   onMouseEnter={e => {
                     const el = e.currentTarget as HTMLElement;
@@ -157,16 +156,16 @@ export function BestFitClients() {
 
                   {/* Metric block */}
                   <div
-                    className="flex-shrink-0 w-28 h-28 lg:w-36 lg:h-36 rounded-3xl flex flex-col items-center justify-center relative z-10"
+                    className="flex-shrink-0 flex sm:flex-col items-center sm:justify-center gap-3 sm:gap-0 sm:w-28 sm:h-28 lg:w-36 lg:h-36 rounded-2xl sm:rounded-3xl p-3 sm:p-0 relative z-10"
                     style={{
                       background: a.bg,
                       border: `1.5px solid ${a.border}`,
                     }}
                   >
-                    <span className="text-3xl lg:text-4xl font-black leading-none" style={{ color: a.color }}>
+                    <span className="text-2xl sm:text-3xl lg:text-4xl font-black leading-none" style={{ color: a.color }}>
                       {client.metric}
                     </span>
-                    <span className="text-[10px] font-semibold text-center leading-tight mt-1.5 max-w-[70px]"
+                    <span className="text-[10px] sm:text-[10px] font-semibold sm:text-center leading-tight sm:mt-1.5 sm:max-w-[70px]"
                       style={{ color: a.color.replace(")", "/0.65)") }}>
                       {client.metricLabel}
                     </span>

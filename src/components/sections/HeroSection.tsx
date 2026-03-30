@@ -1,10 +1,12 @@
 import { Suspense, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, Calendar, ChevronDown, Zap, Globe, Smartphone, TrendingUp, Bot } from "lucide-react";
+import { ArrowRight, MessageCircle, ChevronDown, Zap, Globe, BarChart3, Share2, Palette, Video } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { HeroCanvas } from "@/components/three/HeroCanvas";
 import { useIsMobile } from "@/hooks/use-mobile";
+
+const WHATSAPP_PRIMARY = "923094278123";
 
 const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.12 } } };
 const fadeUp = {
@@ -13,10 +15,11 @@ const fadeUp = {
 };
 
 const servicePills = [
-  { icon: Globe,       label: "Web Design",        color: "hsl(var(--primary))" },
-  { icon: Smartphone,  label: "App Dev",            color: "hsl(var(--cyan))" },
-  { icon: TrendingUp,  label: "Paid Media",         color: "hsl(var(--violet))" },
-  { icon: Bot,         label: "AI Automation",      color: "hsl(var(--primary))" },
+  { icon: BarChart3,   label: "Performance Marketing", color: "hsl(var(--primary))" },
+  { icon: Share2,      label: "Social Media",          color: "hsl(var(--cyan))" },
+  { icon: Globe,       label: "Web Development",       color: "hsl(var(--violet))" },
+  { icon: Palette,     label: "Graphic Design",        color: "hsl(var(--primary))" },
+  { icon: Video,       label: "Video Editing",         color: "hsl(var(--cyan))" },
 ];
 
 const metrics = [
@@ -112,7 +115,7 @@ export function HeroSection() {
 
       {/* ── Service pills — floating behind hero ── */}
       {!isMobile && (
-        <div className="absolute top-[28%] right-[28%] z-[2] hidden lg:flex flex-col gap-2.5">
+        <div className="absolute top-[24%] right-[26%] z-[2] hidden lg:flex flex-col gap-2.5">
           {servicePills.map((p, i) => {
             const Icon = p.icon;
             return (
@@ -177,7 +180,7 @@ export function HeroSection() {
                 Clients.
               </span>
               <br />
-              <span style={{ color: "hsl(var(--foreground))" }}>Browsers Into{" "}</span>
+              <span style={{ color: "hsl(var(--foreground))" }}>Browsers Into </span>
               <span style={{
                 background: "linear-gradient(130deg, hsl(var(--primary)) 0%, hsl(var(--violet)) 100%)",
                 WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
@@ -192,7 +195,7 @@ export function HeroSection() {
               className="text-xl sm:text-2xl leading-relaxed mb-12 max-w-[540px] font-light"
               style={{ color: "hsl(var(--muted-foreground))" }}
             >
-              We engineer high-converting websites, mobile apps, performance marketing, and AI automations —{" "}
+              We deliver performance marketing, social media management, stunning websites, graphic design & video editing —{" "}
               <span style={{ color: "hsl(var(--foreground))", fontWeight: 600 }}>built to grow your revenue.</span>
             </motion.p>
 
@@ -201,13 +204,13 @@ export function HeroSection() {
               <Button asChild size="lg"
                 className="relative font-bold px-9 text-base group overflow-hidden rounded-2xl h-14"
                 style={{
-                  background: "linear-gradient(135deg, hsl(var(--primary)), hsl(214 100% 42%))",
-                  color: "hsl(var(--primary-foreground))",
-                  boxShadow: "0 6px 36px hsl(214 100% 50% / 0.40), 0 2px 8px hsl(214 100% 50% / 0.2), inset 0 1px 0 hsl(214 100% 75% / 0.2)",
+                  background: "linear-gradient(135deg, #1DA851, #25D366)",
+                  color: "white",
+                  boxShadow: "0 6px 36px hsl(142 70% 45% / 0.40), 0 2px 8px hsl(142 70% 45% / 0.2), inset 0 1px 0 hsl(142 70% 60% / 0.2)",
                 }}>
-                <a href="https://calendly.com" target="_blank" rel="noopener noreferrer">
-                  <Calendar className="w-4 h-4" />
-                  Book a Free Strategy Call
+                <a href={`https://wa.me/${WHATSAPP_PRIMARY}?text=${encodeURIComponent("Hi Nexon Growth! I'm interested in your services and would like to get a free strategy consultation.")}`} target="_blank" rel="noopener noreferrer">
+                  <MessageCircle className="w-4 h-4" />
+                  Chat on WhatsApp
                   <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
                 </a>
               </Button>

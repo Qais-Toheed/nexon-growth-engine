@@ -152,10 +152,10 @@ export function AboutTeaser() {
             </h2>
 
             <p className="text-lg mb-5 leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>
-              Nexon Growth is a growth-focused digital agency that combines strategy, design, development, and performance marketing into one integrated service model.
+              Nexon Growth is a growth-focused digital agency that combines strategy, design, development, marketing, and content creation into one integrated service model.
             </p>
             <p className="text-base mb-12 leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>
-              We work with ecommerce brands, SaaS startups, and ambitious businesses that are serious about building digital infrastructure that performs — not just digital assets that exist.
+              We work with ecommerce brands, startups, and ambitious businesses that are serious about building digital infrastructure that performs — not just digital assets that exist.
             </p>
 
             {/* Feature highlights */}

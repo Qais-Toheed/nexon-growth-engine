@@ -5,14 +5,14 @@ import { ArrowRight, ExternalLink } from "lucide-react";
 import { caseStudies } from "@/data/caseStudies";
 import { CTABanner } from "@/components/sections/CTABanner";
 
-const tabs = ["All", "Web", "Ecommerce", "Marketing", "AI", "App"] as const;
+const tabs = ["All", "Web", "Marketing", "Social", "Design", "Video"] as const;
 
 const catColors: Record<string, { text: string; bg: string; border: string; bar: string }> = {
   Web:       { text: "hsl(var(--primary))", bg: "hsl(var(--primary)/0.08)", border: "hsl(var(--primary)/0.22)", bar: "#0080FF" },
-  Ecommerce: { text: "hsl(var(--cyan))",    bg: "hsl(var(--cyan)/0.08)",    border: "hsl(var(--cyan)/0.22)",    bar: "#09BDD6" },
   Marketing: { text: "hsl(var(--violet))",  bg: "hsl(var(--violet)/0.08)",  border: "hsl(var(--violet)/0.22)",  bar: "#7A52F4" },
-  AI:        { text: "hsl(var(--primary))", bg: "hsl(var(--primary)/0.08)", border: "hsl(var(--primary)/0.22)", bar: "#0080FF" },
-  App:       { text: "hsl(var(--cyan))",    bg: "hsl(var(--cyan)/0.08)",    border: "hsl(var(--cyan)/0.22)",    bar: "#09BDD6" },
+  Social:    { text: "hsl(var(--cyan))",    bg: "hsl(var(--cyan)/0.08)",    border: "hsl(var(--cyan)/0.22)",    bar: "#09BDD6" },
+  Design:    { text: "hsl(var(--primary))", bg: "hsl(var(--primary)/0.08)", border: "hsl(var(--primary)/0.22)", bar: "#0080FF" },
+  Video:     { text: "hsl(var(--cyan))",    bg: "hsl(var(--cyan)/0.08)",    border: "hsl(var(--cyan)/0.22)",    bar: "#09BDD6" },
 };
 
 const Portfolio = () => {
@@ -49,7 +49,7 @@ const Portfolio = () => {
               }}>Real outcomes.</span>
             </h1>
             <p className="text-xl text-muted-foreground leading-relaxed">
-              A selection of work spanning web, ecommerce, marketing, and AI automation.
+              A selection of work spanning web development, marketing, social media, design, and video.
             </p>
           </motion.div>
         </div>
@@ -85,37 +85,50 @@ const Portfolio = () => {
                   transition={{ duration: 0.5, delay: i * 0.07 }}
                   className="group flex flex-col rounded-2xl overflow-hidden transition-all duration-400 cursor-pointer"
                   style={{ background: "hsl(220 20% 100%)", border: "1px solid hsl(var(--border))", boxShadow: "0 2px 16px hsl(220 30% 10% / 0.05)" }}
+                  onClick={() => study.link ? window.open(study.link, '_blank') : null}
                   onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.borderColor = cat.border; el.style.boxShadow = `0 16px 56px hsl(220 30% 10% / 0.10), 0 4px 24px ${cat.text.replace(")", "/0.10)")}`; el.style.transform = "translateY(-4px)"; }}
                   onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.borderColor = "hsl(var(--border))"; el.style.boxShadow = "0 2px 16px hsl(220 30% 10% / 0.05)"; el.style.transform = ""; }}
                 >
-                  {/* Visual thumbnail with browser mockup */}
+                  {/* Visual thumbnail */}
                   <div className="h-52 relative overflow-hidden"
                     style={{ background: `linear-gradient(135deg, ${cat.bg}, transparent)` }}>
-                    {/* Mockup frame */}
-                    <div className="absolute inset-4 rounded-xl overflow-hidden shadow-lg"
-                      style={{ background: "hsl(220 20% 100% / 0.96)", border: "1px solid hsl(var(--border))" }}>
-                      <div className="flex items-center gap-1.5 px-3 py-2 border-b"
-                        style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--surface))" }}>
-                        {["hsl(0 80% 65%)", "hsl(40 90% 58%)", "hsl(142 70% 45%)"].map((c, ci) => (
-                          <div key={ci} className="w-2 h-2 rounded-full" style={{ background: c }} />
-                        ))}
-                        <div className="flex-1 h-1.5 rounded-full ml-2" style={{ background: "hsl(var(--border))" }} />
+                    
+                    {study.image ? (
+                      <div className="absolute inset-0 p-4">
+                        <img 
+                          src={study.image} 
+                          alt={study.title} 
+                          className="w-full h-full object-cover rounded-xl shadow-lg border"
+                          style={{ borderColor: "hsl(var(--border))" }}
+                        />
                       </div>
-                      <div className="p-3">
-                        <div className="h-12 rounded-lg mb-2 flex items-center px-3"
-                          style={{ background: `${cat.bg}`, border: `1px solid ${cat.border}` }}>
-                          <div className="h-2 w-3/5 rounded-full" style={{ background: cat.bar, opacity: 0.7 }} />
+                    ) : (
+                      /* Mockup frame */
+                      <div className="absolute inset-4 rounded-xl overflow-hidden shadow-lg"
+                        style={{ background: "hsl(220 20% 100% / 0.96)", border: "1px solid hsl(var(--border))" }}>
+                        <div className="flex items-center gap-1.5 px-3 py-2 border-b"
+                          style={{ borderColor: "hsl(var(--border))", background: "hsl(var(--surface))" }}>
+                          {["hsl(0 80% 65%)", "hsl(40 90% 58%)", "hsl(142 70% 45%)"].map((c, ci) => (
+                            <div key={ci} className="w-2 h-2 rounded-full" style={{ background: c }} />
+                          ))}
+                          <div className="flex-1 h-1.5 rounded-full ml-2" style={{ background: "hsl(var(--border))" }} />
                         </div>
-                        <div className="grid grid-cols-2 gap-2">
-                          <div className="h-8 rounded-lg" style={{ background: "hsl(var(--surface))" }} />
-                          <div className="h-8 rounded-lg" style={{ background: "hsl(var(--surface))" }} />
-                        </div>
-                        <div className="mt-2 space-y-1">
-                          <div className="h-1.5 w-full rounded-full" style={{ background: "hsl(var(--border))" }} />
-                          <div className="h-1.5 w-4/5 rounded-full" style={{ background: "hsl(var(--border))" }} />
+                        <div className="p-3">
+                          <div className="h-12 rounded-lg mb-2 flex items-center px-3"
+                            style={{ background: `${cat.bg}`, border: `1px solid ${cat.border}` }}>
+                            <div className="h-2 w-3/5 rounded-full" style={{ background: cat.bar, opacity: 0.7 }} />
+                          </div>
+                          <div className="grid grid-cols-2 gap-2">
+                            <div className="h-8 rounded-lg" style={{ background: "hsl(var(--surface))" }} />
+                            <div className="h-8 rounded-lg" style={{ background: "hsl(var(--surface))" }} />
+                          </div>
+                          <div className="mt-2 space-y-1">
+                            <div className="h-1.5 w-full rounded-full" style={{ background: "hsl(var(--border))" }} />
+                            <div className="h-1.5 w-4/5 rounded-full" style={{ background: "hsl(var(--border))" }} />
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    )}
 
                     {/* Category badge */}
                     <div className="absolute top-3 left-3">
@@ -130,7 +143,7 @@ const Portfolio = () => {
                       style={{ background: `${cat.text.replace(")", "/0.06)")}` }}>
                       <div className="w-10 h-10 rounded-full flex items-center justify-center"
                         style={{ background: cat.text, color: "white" }}>
-                        <ExternalLink className="w-4 h-4" />
+                        {study.link ? <ExternalLink className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
                       </div>
                     </div>
                   </div>
@@ -156,12 +169,21 @@ const Portfolio = () => {
                       ))}
                     </div>
 
-                    <Link to="/contact"
-                      className="inline-flex items-center gap-1.5 text-sm font-semibold group-hover:gap-2 transition-all"
-                      style={{ color: cat.text }}>
-                      Want something similar?
-                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
-                    </Link>
+                    {study.link ? (
+                      <a href={study.link} target="_blank" rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-sm font-semibold group-hover:gap-2 transition-all"
+                        style={{ color: cat.text }}>
+                        Visit Website
+                        <ExternalLink className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                      </a>
+                    ) : (
+                      <Link to="/contact"
+                        className="inline-flex items-center gap-1.5 text-sm font-semibold group-hover:gap-2 transition-all"
+                        style={{ color: cat.text }}>
+                        Want something similar?
+                        <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                      </Link>
+                    )}
                   </div>
                 </motion.article>
               );

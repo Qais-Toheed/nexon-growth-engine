@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 import { LeadForm } from "@/components/sections/LeadForm";
-import { Mail, MessageCircle, Calendar, ArrowRight, CheckCircle, Clock, MapPin } from "lucide-react";
+import { Mail, MessageCircle, Calendar, Phone, ArrowRight, CheckCircle, Clock } from "lucide-react";
+
+const WHATSAPP_PRIMARY = "923094278123";
 
 const Contact = () => {
   return (
@@ -68,6 +70,25 @@ const Contact = () => {
                 <div className="rounded-2xl p-6" style={{ background: "hsl(220 20% 100%)", border: "1px solid hsl(var(--border))", boxShadow: "0 2px 20px hsl(220 30% 10% / 0.05)" }}>
                   <h3 className="font-bold mb-5 text-sm uppercase tracking-wider" style={{ color: "hsl(var(--muted-foreground))" }}>Reach us directly</h3>
                   <div className="space-y-3">
+                    {/* WhatsApp - Primary */}
+                    <a href={`https://wa.me/${WHATSAPP_PRIMARY}?text=${encodeURIComponent("Hi Nexon Growth! I'd like to discuss a project.")}`} target="_blank" rel="noopener noreferrer"
+                      className="flex gap-4 p-4 rounded-xl transition-all duration-300 group"
+                      style={{ background: "hsl(var(--surface))", border: "1px solid hsl(var(--border))" }}
+                      onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.borderColor = "hsl(142 70% 45% / 0.35)"; el.style.boxShadow = "0 4px 20px hsl(142 70% 45% / 0.10)"; }}
+                      onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.borderColor = "hsl(var(--border))"; el.style.boxShadow = ""; }}
+                    >
+                      <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                        style={{ background: "hsl(142 70% 45% / 0.10)", border: "1px solid hsl(142 70% 45% / 0.22)" }}>
+                        <MessageCircle className="w-5 h-5" style={{ color: "hsl(142 70% 45%)" }} />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-bold text-sm mb-0.5">Chat on WhatsApp</p>
+                        <p className="text-xs text-muted-foreground">Fastest response — typically within minutes</p>
+                      </div>
+                      <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:translate-x-0.5 transition-all flex-shrink-0 self-center" style={{ color: "hsl(142 70% 45%)" }} />
+                    </a>
+
+                    {/* Calendly */}
                     <a href="https://calendly.com" target="_blank" rel="noopener noreferrer"
                       className="flex gap-4 p-4 rounded-xl transition-all duration-300 group"
                       style={{ background: "hsl(var(--surface))", border: "1px solid hsl(var(--border))" }}
@@ -85,23 +106,21 @@ const Contact = () => {
                       <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 transition-all flex-shrink-0 self-center" />
                     </a>
 
-                    <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer"
-                      className="flex gap-4 p-4 rounded-xl transition-all duration-300 group"
-                      style={{ background: "hsl(var(--surface))", border: "1px solid hsl(var(--border))" }}
-                      onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.borderColor = "hsl(142 70% 45% / 0.35)"; el.style.boxShadow = "0 4px 20px hsl(142 70% 45% / 0.10)"; }}
-                      onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.borderColor = "hsl(var(--border))"; el.style.boxShadow = ""; }}
-                    >
+                    {/* Phone Numbers */}
+                    <div className="flex gap-4 p-4 rounded-xl"
+                      style={{ background: "hsl(var(--surface))", border: "1px solid hsl(var(--border))" }}>
                       <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                        style={{ background: "hsl(142 70% 45% / 0.10)", border: "1px solid hsl(142 70% 45% / 0.22)" }}>
-                        <MessageCircle className="w-5 h-5" style={{ color: "hsl(142 70% 45%)" }} />
+                        style={{ background: "hsl(var(--primary)/0.10)", border: "1px solid hsl(var(--primary)/0.20)" }}>
+                        <Phone className="w-5 h-5 text-primary" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="font-bold text-sm mb-0.5">Chat on WhatsApp</p>
-                        <p className="text-xs text-muted-foreground">Typically replies within minutes</p>
+                        <p className="font-bold text-sm mb-1">Call Us</p>
+                        <a href="tel:+923094278123" className="text-xs text-muted-foreground hover:text-foreground transition-colors block">+92 309 4278123 (Primary)</a>
+                        <a href="tel:+923036091877" className="text-xs text-muted-foreground hover:text-foreground transition-colors block">+92 303 6091877</a>
                       </div>
-                      <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:translate-x-0.5 transition-all flex-shrink-0 self-center" style={{ color: "hsl(142 70% 45%)" }} />
-                    </a>
+                    </div>
 
+                    {/* Email */}
                     <a href="mailto:hello@nexongrowth.com"
                       className="flex gap-4 p-4 rounded-xl transition-all duration-300 group"
                       style={{ background: "hsl(var(--surface))", border: "1px solid hsl(var(--border))" }}

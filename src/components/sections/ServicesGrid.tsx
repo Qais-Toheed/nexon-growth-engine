@@ -1,19 +1,19 @@
 import { Link } from "react-router-dom";
-import { motion, useScroll, useTransform, useInView } from "framer-motion";
-import { ArrowUpRight, Globe, Smartphone, TrendingUp, ShoppingBag, Bot, Sparkles } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { ArrowUpRight, Globe, BarChart3, Share2, Palette, Video, Sparkles } from "lucide-react";
 import { servicesSummary } from "@/data/services";
 import { useRef } from "react";
 
 const iconMap: Record<string, React.ElementType> = {
-  Globe, Smartphone, TrendingUp, ShoppingBag, Bot,
+  Globe, BarChart3, Share2, Palette, Video,
 };
 
 const configs = [
-  { accent: "hsl(var(--primary))", num: "01", tag: "Web & Mobile",  mockupColors: ["#0080FF","#E8F0FF","#C5D9FF"] },
-  { accent: "hsl(var(--cyan))",    num: "02", tag: "Paid Media",    mockupColors: ["#09BDD6","#E0F8FC","#A8EDF6"] },
-  { accent: "hsl(var(--violet))",  num: "03", tag: "Ecommerce",     mockupColors: ["#7A52F4","#EDE8FF","#C4B3FF"] },
-  { accent: "hsl(var(--primary))", num: "04", tag: "AI Systems",    mockupColors: ["#0080FF","#E8F0FF","#C5D9FF"] },
-  { accent: "hsl(var(--cyan))",    num: "05", tag: "Strategy",      mockupColors: ["#09BDD6","#E0F8FC","#A8EDF6"] },
+  { accent: "hsl(var(--primary))", num: "01", tag: "Paid Ads",       mockupColors: ["#0080FF","#E8F0FF","#C5D9FF"] },
+  { accent: "hsl(var(--cyan))",    num: "02", tag: "Social Media",   mockupColors: ["#09BDD6","#E0F8FC","#A8EDF6"] },
+  { accent: "hsl(var(--violet))",  num: "03", tag: "Web Dev",        mockupColors: ["#7A52F4","#EDE8FF","#C4B3FF"] },
+  { accent: "hsl(var(--primary))", num: "04", tag: "Design",         mockupColors: ["#0080FF","#E8F0FF","#C5D9FF"] },
+  { accent: "hsl(var(--cyan))",    num: "05", tag: "Video",          mockupColors: ["#09BDD6","#E0F8FC","#A8EDF6"] },
 ];
 
 // Inline mini browser mockup component
@@ -72,10 +72,10 @@ export function ServicesGrid() {
           >
             <div className="flex items-center gap-3 mb-6">
               <div className="h-px w-10" style={{ background: "linear-gradient(to right, hsl(var(--primary)), hsl(var(--cyan)))" }} />
-              <span className="text-[11px] font-bold uppercase tracking-[0.2em]" style={{ color: "hsl(var(--primary))" }}>What We Build</span>
+              <span className="text-[11px] font-bold uppercase tracking-[0.2em]" style={{ color: "hsl(var(--primary))" }}>What We Do</span>
             </div>
             <h2 className="font-black leading-[1.0] tracking-tight" style={{ fontSize: "clamp(2.8rem,6.5vw,80px)", color: "hsl(var(--foreground))" }}>
-              Digital systems<br />
+              Digital services<br />
               <span style={{
                 background: "linear-gradient(130deg, hsl(var(--primary)), hsl(var(--cyan)))",
                 WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
@@ -93,7 +93,7 @@ export function ServicesGrid() {
             className="max-w-sm lg:pb-3"
           >
             <p className="text-base leading-relaxed mb-5" style={{ color: "hsl(var(--muted-foreground))" }}>
-              Five interconnected services engineered around one goal: generating qualified leads and converting them into revenue.
+              Five interconnected services engineered around one goal: building your brand, generating qualified leads, and converting them into revenue.
             </p>
             <Link to="/services"
               className="inline-flex items-center gap-2 text-sm font-bold group"

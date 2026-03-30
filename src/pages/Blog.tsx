@@ -1,40 +1,40 @@
 import { motion } from "framer-motion";
 import { CTABanner } from "@/components/sections/CTABanner";
-import { Clock, ArrowUpRight, BookOpen, TrendingUp, Bot, Globe, ShoppingBag, Zap } from "lucide-react";
+import { Clock, ArrowUpRight, BookOpen, TrendingUp, Globe, Share2, Palette, Video, Zap } from "lucide-react";
 
-const categories = ["Web Design", "Conversion Optimization", "Paid Ads Strategy", "Shopify Growth", "AI Automation", "Digital Growth Systems"];
+const categories = ["Web Design", "Conversion Optimization", "Paid Ads Strategy", "Social Media", "Graphic Design", "Video Content"];
 
 const catIcons: Record<string, React.ElementType> = {
   "Web Design": Globe,
   "Conversion Optimization": TrendingUp,
   "Paid Ads Strategy": TrendingUp,
-  "Shopify Growth": ShoppingBag,
-  "AI Automation": Bot,
-  "Digital Growth Systems": Zap,
+  "Social Media": Share2,
+  "Graphic Design": Palette,
+  "Video Content": Video,
 };
 
 const catColors: Record<string, string> = {
   "Web Design": "hsl(var(--primary))",
   "Conversion Optimization": "hsl(var(--cyan))",
   "Paid Ads Strategy": "hsl(var(--violet))",
-  "Shopify Growth": "hsl(var(--cyan))",
-  "AI Automation": "hsl(var(--primary))",
-  "Digital Growth Systems": "hsl(var(--violet))",
+  "Social Media": "hsl(var(--cyan))",
+  "Graphic Design": "hsl(var(--primary))",
+  "Video Content": "hsl(var(--violet))",
 };
 
 const posts = [
   { title: "Why Your Website Loses 70% of Visitors Before They Convert", category: "Conversion Optimization", read: "5 min read", featured: true,
     excerpt: "Most websites fail to convert not because of poor design, but because of poor strategy. Here's the conversion architecture framework we apply to every project." },
-  { title: "The Shopify CRO Checklist: 12 Changes That Move the Needle", category: "Shopify Growth", read: "7 min read", featured: false,
-    excerpt: "Conversion rate optimization for Shopify stores isn't complicated — but it is systematic. These are the 12 highest-impact areas we audit in every store." },
+  { title: "How to Build a Social Media Strategy That Actually Drives Revenue", category: "Social Media", read: "7 min read", featured: false,
+    excerpt: "Posting without strategy is noise. Here's how to build a content calendar, engagement plan, and measurement framework that turns followers into customers." },
   { title: "How to Stop Wasting Your Meta Ads Budget", category: "Paid Ads Strategy", read: "6 min read", featured: false,
     excerpt: "The most common reason Meta ad campaigns underperform isn't the budget or the platform — it's the campaign structure and the landing page." },
-  { title: "AI Automation for Small Businesses: Where to Start", category: "AI Automation", read: "8 min read", featured: false,
-    excerpt: "AI automation doesn't require a technical team or enterprise budget. Here's a practical framework for identifying your first automation wins." },
+  { title: "Why Consistent Brand Design Increases Conversions by 33%", category: "Graphic Design", read: "5 min read", featured: false,
+    excerpt: "Inconsistent visual identity doesn't just look unprofessional — it actively reduces trust. Here's how to build a design system that converts." },
   { title: "What Makes a High-Converting Agency Website", category: "Web Design", read: "5 min read", featured: false,
     excerpt: "A great agency website isn't about awards or animations. It's about trust architecture — the design and copy decisions that make visitors confident enough to reach out." },
-  { title: "Building a Digital Growth System From Scratch", category: "Digital Growth Systems", read: "9 min read", featured: false,
-    excerpt: "Most businesses treat digital marketing as disconnected tactics. A growth system connects your website, ads, automations, and CRM into one compounding machine." },
+  { title: "Video Content Strategy: Why Short-Form Video Gets 3× More Engagement", category: "Video Content", read: "6 min read", featured: false,
+    excerpt: "Short-form video dominates every platform algorithm. Here's how to create a sustainable video content pipeline that builds your brand." },
 ];
 
 // Inline blog thumbnail visual
@@ -209,7 +209,7 @@ const Blog = () => (
       </div>
     </section>
 
-    <CTABanner headline="Want growth insights delivered to your inbox?" subheadline="We publish practical, no-fluff content on digital growth, conversion optimization, and AI automation." />
+    <CTABanner headline="Want growth insights delivered to your inbox?" subheadline="We publish practical, no-fluff content on digital growth, social media strategy, and performance marketing." />
   </main>
 );
 

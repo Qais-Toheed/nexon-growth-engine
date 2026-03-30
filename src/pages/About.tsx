@@ -8,7 +8,7 @@ const values = [
   { icon: Target, title: "Outcome-obsessed", accent: "primary",
     desc: "We measure everything against one question: is this moving your business forward? Impressions and aesthetics matter only insofar as they drive results." },
   { icon: Layers, title: "Integrated execution", accent: "cyan",
-    desc: "Strategy, design, development, and marketing — we do all of it. No briefing multiple vendors. One partner, full accountability." },
+    desc: "Marketing, social media, web development, design & video — we do all of it. No briefing multiple vendors. One partner, full accountability." },
   { icon: Users, title: "Built on transparency", accent: "violet",
     desc: "You work directly with the team. You own all assets from day one. Honest assessments, not comfortable answers." },
   { icon: Zap, title: "Speed without compromise", accent: "primary",
@@ -173,7 +173,7 @@ const About = () => {
               <div className="space-y-5 text-muted-foreground leading-relaxed mb-10">
                 <p>Nexon Growth was built because of a simple observation: most digital agencies are optimized for their own billing, not their clients' outcomes. Projects drag on. Communication is filtered through account managers. Clients often don't fully own what was built for them.</p>
                 <p>We built Nexon Growth to operate differently — as a strategic execution partner that moves fast, communicates directly, and measures success by the same thing our clients do: business results.</p>
-                <p>We combine strategy, design, development, and performance marketing into one integrated service model. Every service we offer is connected to the same goal: building digital systems that generate real business growth.</p>
+                <p>We combine performance marketing, social media management, website development, graphic design, and video editing into one integrated service model. Every service we offer is connected to the same goal: building digital systems that generate real business growth.</p>
               </div>
               <Link to="/contact"
                 className="inline-flex items-center gap-2 font-bold text-sm group"

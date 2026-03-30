@@ -1,26 +1,47 @@
 import { useParams, Navigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Check, ChevronRight, Zap, ExternalLink } from "lucide-react";
-import { Globe, Smartphone, TrendingUp, ShoppingBag, Bot } from "lucide-react";
+import { ArrowRight, Check, ChevronRight, Zap, ExternalLink, MessageCircle } from "lucide-react";
+import { Globe, BarChart3, Share2, Palette, Video } from "lucide-react";
 import { services } from "@/data/services";
 import { LeadForm } from "@/components/sections/LeadForm";
 import { FAQAccordion } from "@/components/sections/FAQAccordion";
 import { CTABanner } from "@/components/sections/CTABanner";
 
+const WHATSAPP_PRIMARY = "923094278123";
+
 const iconMap: Record<string, React.ElementType> = {
-  Globe, Smartphone, TrendingUp, ShoppingBag, Bot,
+  Globe, BarChart3, Share2, Palette, Video,
 };
 
 const accentBySlug: Record<string, { primary: string; secondary: string; glow: string }> = {
-  "web-development":  { primary: "hsl(var(--primary))", secondary: "hsl(var(--cyan))",   glow: "hsl(214 100% 50% / 0.12)" },
-  "app-development":  { primary: "hsl(var(--cyan))",    secondary: "hsl(var(--primary))", glow: "hsl(188 97% 44% / 0.12)" },
-  "digital-marketing":{ primary: "hsl(var(--violet))",  secondary: "hsl(var(--primary))", glow: "hsl(255 82% 62% / 0.10)" },
-  "shopify-ecommerce":{ primary: "hsl(var(--cyan))",    secondary: "hsl(var(--violet))",  glow: "hsl(188 97% 44% / 0.10)" },
-  "ai-automation":    { primary: "hsl(var(--primary))", secondary: "hsl(var(--violet))",  glow: "hsl(214 100% 50% / 0.12)" },
+  "performance-marketing": { primary: "hsl(var(--primary))", secondary: "hsl(var(--cyan))",   glow: "hsl(214 100% 50% / 0.12)" },
+  "social-media-handling":  { primary: "hsl(var(--cyan))",    secondary: "hsl(var(--primary))", glow: "hsl(188 97% 44% / 0.12)" },
+  "website-development":    { primary: "hsl(var(--violet))",  secondary: "hsl(var(--primary))", glow: "hsl(255 82% 62% / 0.10)" },
+  "graphic-designing":      { primary: "hsl(var(--primary))", secondary: "hsl(var(--violet))",  glow: "hsl(214 100% 50% / 0.12)" },
+  "video-editing":          { primary: "hsl(var(--cyan))",    secondary: "hsl(var(--violet))",  glow: "hsl(188 97% 44% / 0.10)" },
+};
+
+const hslAlpha = (color: string, alpha: number) => {
+  const m = color.match(/^hsl\(var\((--[^)]+)\)\)$/);
+  if (!m) return color;
+  return `hsl(var(${m[1]}) / ${alpha})`;
 };
 
 // Visual preview mockup for service hero
-function ServiceHeroVisual({ service, accent }: { service: { name: string }; accent: { primary: string; secondary: string } }) {
+function ServiceHeroVisual({
+  service,
+  accent,
+}: {
+  service: { slug: string; icon: string; name: string };
+  accent: { primary: string; secondary: string };
+}) {
+  // Convert `hsl(var(--primary))` -> `hsl(var(--primary) / 0.22)` reliably.
+  const withAlpha = (color: string, alpha: number) => {
+    const m = color.match(/^hsl\(var\((--[^)]+)\)\)$/);
+    if (!m) return color;
+    return `hsl(var(${m[1]}) / ${alpha})`;
+  };
+
   return (
     <div className="relative w-full h-full flex items-center justify-center">
       {/* Main mockup card */}
@@ -28,7 +49,7 @@ function ServiceHeroVisual({ service, accent }: { service: { name: string }; acc
         style={{
           background: "hsl(220 20% 100% / 0.96)",
           border: "1px solid hsl(var(--border))",
-          boxShadow: `0 24px 80px ${accent.primary.replace(")", "/0.18)")}`,
+          boxShadow: `0 24px 80px ${withAlpha(accent.primary, 0.18)}`,
         }}>
         {/* Browser bar */}
         <div className="flex items-center gap-1.5 px-4 py-3 border-b"
@@ -41,7 +62,10 @@ function ServiceHeroVisual({ service, accent }: { service: { name: string }; acc
         </div>
         {/* Hero strip */}
         <div className="h-20 flex items-center px-5 gap-4"
-          style={{ background: `linear-gradient(135deg, ${accent.primary.replace(")", "/0.08)")}, ${accent.secondary.replace(")", "/0.04)")})` }}>
+          style={{
+            background: `linear-gradient(135deg, ${withAlpha(accent.primary, 0.08)}, ${withAlpha(accent.secondary, 0.04)})`,
+          }}
+        >
           <div className="w-10 h-10 rounded-xl flex-shrink-0" style={{ background: accent.primary, opacity: 0.85 }} />
           <div className="flex-1 space-y-1.5">
             <div className="h-2.5 w-3/5 rounded-full" style={{ background: accent.primary, opacity: 0.75 }} />
@@ -76,6 +100,163 @@ function ServiceHeroVisual({ service, accent }: { service: { name: string }; acc
         style={{ background: accent.primary, animation: "float 6s ease-in-out infinite" }} />
       <div className="absolute bottom-12 left-8 w-8 h-8 rounded-full opacity-15"
         style={{ background: accent.secondary, animation: "float 8s ease-in-out infinite", animationDelay: "2s" }} />
+
+      {/* Service-specific visuals */}
+      {service.slug === "performance-marketing" && (
+        <>
+          <div
+            className="absolute top-16 left-6 w-28 h-20 rounded-2xl opacity-90"
+            style={{
+              background: "hsl(220 20% 100% / 0.75)",
+              border: `1px solid ${withAlpha(accent.primary, 0.22)}`,
+              backdropFilter: "blur(6px)",
+            }}
+          >
+            <div className="absolute inset-0" style={{ opacity: 0.9, backgroundImage: "radial-gradient(circle at 20% 20%, hsl(214 100% 50% / 0.10) 0%, transparent 55%)" }} />
+            <div className="absolute bottom-3 left-4 right-4 flex items-end gap-1">
+              {[16, 26, 12, 34, 22, 40].map((h, idx) => (
+                <div
+                  // eslint-disable-next-line react/no-array-index-key
+                  key={idx}
+                  className="w-[12%] rounded-full"
+                  style={{
+                    height: h,
+                    background: `linear-gradient(180deg, ${accent.primary}, ${accent.secondary})`,
+                    opacity: 0.55 + idx * 0.03,
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+          <div className="absolute -top-2 -left-2 w-20 h-20 rounded-full opacity-20" style={{ border: `1px dashed ${withAlpha(accent.secondary, 0.28)}` }} />
+        </>
+      )}
+
+      {service.slug === "social-media-handling" && (
+        <>
+          <div
+            className="absolute top-12 right-2 w-32 h-24 rounded-2xl p-3 opacity-95"
+            style={{
+              background: "hsl(220 20% 100% / 0.78)",
+              border: `1px solid ${withAlpha(accent.secondary, 0.22)}`,
+              backdropFilter: "blur(6px)",
+            }}
+          >
+            <div className="flex items-center gap-2">
+              <div className="w-2.5 h-2.5 rounded-full" style={{ background: accent.primary, opacity: 0.9 }} />
+              <div className="w-2.5 h-2.5 rounded-full" style={{ background: accent.secondary, opacity: 0.9 }} />
+              <div className="flex-1 h-1.5 rounded-full" style={{ background: "hsl(var(--border))" }} />
+            </div>
+            <div className="mt-3 space-y-2">
+              {[0, 1].map((row) => (
+                <div key={row} className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-2xl" style={{ background: `linear-gradient(135deg, ${accent.primary}, ${accent.secondary})`, opacity: 0.25 + row * 0.08 }} />
+                  <div className="flex-1">
+                    <div className="h-2 rounded-full" style={{ background: "hsl(var(--border))", opacity: 0.9 }} />
+                    <div className="h-1.5 rounded-full mt-1" style={{ background: "hsl(var(--border))", opacity: 0.7 }} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="absolute -bottom-4 right-6 w-20 h-20 rounded-full opacity-20" style={{ background: `radial-gradient(circle, ${accent.primary} 0%, transparent 60%)` }} />
+        </>
+      )}
+
+      {service.slug === "website-development" && (
+        <>
+          <div
+            className="absolute top-14 left-4 w-32 h-24 rounded-2xl opacity-95"
+            style={{
+              background: "hsl(220 20% 100% / 0.78)",
+              border: `1px solid ${withAlpha(accent.primary, 0.22)}`,
+              backdropFilter: "blur(6px)",
+              padding: 12,
+            }}
+          >
+            <div className="h-2 w-3/5 rounded-full" style={{ background: accent.primary, opacity: 0.3 }} />
+            <div className="mt-3 space-y-2">
+              {[0, 1, 2].map((i) => (
+                <div key={i} className="flex gap-2 items-center">
+                  <div className="w-2 h-2 rounded-full" style={{ background: accent.secondary, opacity: 0.55 }} />
+                  <div className="h-1.5 flex-1 rounded-full" style={{ background: "hsl(var(--border))", opacity: 0.9 }} />
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="absolute -top-2 right-10 w-16 h-16 rounded-2xl opacity-20" style={{ border: `1px solid ${withAlpha(accent.secondary, 0.32)}` }} />
+        </>
+      )}
+
+      {service.slug === "graphic-designing" && (
+        <>
+          <div
+            className="absolute top-10 right-4 w-36 h-26 rounded-2xl p-4 opacity-95"
+            style={{
+              background: "hsl(220 20% 100% / 0.80)",
+              border: `1px solid ${withAlpha(accent.secondary, 0.22)}`,
+              backdropFilter: "blur(6px)",
+            }}
+          >
+            <div className="flex items-center gap-2">
+              <div className="w-10 h-10 rounded-2xl" style={{ background: `linear-gradient(135deg, ${accent.primary}, ${accent.secondary})`, opacity: 0.22 }} />
+              <div className="flex-1">
+                <div className="h-2 w-4/5 rounded-full" style={{ background: accent.secondary, opacity: 0.35 }} />
+                <div className="h-1.5 w-2/3 rounded-full mt-2" style={{ background: "hsl(var(--border))", opacity: 0.9 }} />
+              </div>
+            </div>
+            <div className="mt-3 flex gap-2 items-center">
+              {[accent.primary, accent.secondary, "hsl(var(--violet))"].slice(0, 3).map((col, idx) => (
+                <div key={idx} className="w-3 h-3 rounded-full" style={{ background: col, opacity: 0.9 }} />
+              ))}
+              <div className="flex-1 h-px" style={{ background: "hsl(var(--border))" }} />
+            </div>
+          </div>
+          <div className="absolute bottom-2 left-2 w-24 h-24 rounded-full opacity-20" style={{ background: `radial-gradient(circle, ${accent.secondary} 0%, transparent 60%)` }} />
+        </>
+      )}
+
+      {service.slug === "video-editing" && (
+        <>
+          <div
+            className="absolute top-12 left-4 w-34 h-26 rounded-2xl opacity-95 p-3"
+            style={{
+              background: "hsl(220 20% 100% / 0.78)",
+              border: `1px solid ${withAlpha(accent.primary, 0.22)}`,
+              backdropFilter: "blur(6px)",
+            }}
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                {[0, 1, 2].map((i) => (
+                  <div
+                    key={i}
+                    className="w-2 h-2 rounded-full"
+                    style={{ background: i === 0 ? "hsl(0 80% 65%)" : i === 1 ? "hsl(40 90% 58%)" : accent.secondary, opacity: 0.85 }}
+                  />
+                ))}
+              </div>
+              <div className="w-10 h-2 rounded-full" style={{ background: "hsl(var(--border))" }} />
+            </div>
+            <div className="mt-3 space-y-2">
+              <div
+                className="relative h-10 rounded-xl"
+                style={{
+                  background: `linear-gradient(135deg, ${withAlpha(accent.primary, 0.18)}, ${withAlpha(accent.secondary, 0.10)})`,
+                }}
+              >
+                <div className="absolute inset-0 rounded-xl" style={{ backgroundImage: "linear-gradient(90deg, hsl(var(--border)) 1px, transparent 1px)", backgroundSize: "14px 100%", opacity: 0.35 }} />
+                <div className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full flex items-center justify-center"
+                  style={{ background: `linear-gradient(135deg, ${accent.primary}, ${accent.secondary})`, opacity: 0.25 }}>
+                  <div className="w-0 h-0 border-t-[6px] border-b-[6px] border-l-[10px] border-l-white/80 border-t-transparent border-b-transparent" />
+                </div>
+              </div>
+              <div className="h-2 rounded-full" style={{ background: "hsl(var(--border))", opacity: 0.9 }} />
+            </div>
+          </div>
+          <div className="absolute -bottom-4 right-2 w-20 h-20 rounded-2xl opacity-20" style={{ border: `1px dashed ${withAlpha(accent.secondary, 0.28)}` }} />
+        </>
+      )}
     </div>
   );
 }
@@ -87,7 +268,9 @@ const ServicePage = () => {
   if (!service) return <Navigate to="/services" replace />;
 
   const Icon = iconMap[service.icon] || Globe;
-  const accent = accentBySlug[service.slug] ?? accentBySlug["web-development"];
+  const accent = accentBySlug[service.slug] ?? accentBySlug["website-development"];
+
+  const whatsappMessage = encodeURIComponent(`Hi Nexon Growth! I'm interested in your ${service.name} service and would like to get a proposal.`);
 
   return (
     <main className="pt-20">
@@ -120,7 +303,7 @@ const ServicePage = () => {
               <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
                 className="flex items-center gap-3 mb-8">
                 <div className="w-12 h-12 rounded-2xl flex items-center justify-center"
-                  style={{ background: accent.primary.replace(")", "/0.10)"), border: `1.5px solid ${accent.primary.replace(")", "/0.22)")}` }}>
+                  style={{ background: hslAlpha(accent.primary, 0.10), border: `1.5px solid ${hslAlpha(accent.primary, 0.22)}` }}>
                   <Icon className="w-6 h-6" style={{ color: accent.primary }} />
                 </div>
                 <div className="flex items-center gap-2">
@@ -142,23 +325,23 @@ const ServicePage = () => {
 
               <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }}
                 className="flex flex-col sm:flex-row gap-3">
-                <a href="https://calendly.com" target="_blank" rel="noopener noreferrer"
+                <a href={`https://wa.me/${WHATSAPP_PRIMARY}?text=${whatsappMessage}`} target="_blank" rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-xl font-bold text-sm transition-all duration-300 group"
                   style={{
-                    background: accent.primary,
+                    background: "linear-gradient(135deg, #1DA851, #25D366)",
                     color: "white",
-                    boxShadow: `0 6px 28px ${accent.glow}`,
+                    boxShadow: "0 6px 28px hsl(142 70% 45% / 0.35)",
                   }}
-                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; (e.currentTarget as HTMLElement).style.boxShadow = `0 10px 40px ${accent.glow.replace("0.12)", "0.22)")}`; }}
-                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = ""; (e.currentTarget as HTMLElement).style.boxShadow = `0 6px 28px ${accent.glow}`; }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; (e.currentTarget as HTMLElement).style.boxShadow = "0 10px 40px hsl(142 70% 45% / 0.45)"; }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = ""; (e.currentTarget as HTMLElement).style.boxShadow = "0 6px 28px hsl(142 70% 45% / 0.35)"; }}
                 >
-                  <Zap className="w-4 h-4" />
-                  Book a Free Strategy Call
+                  <MessageCircle className="w-4 h-4" />
+                  Chat on WhatsApp
                 </a>
                 <a href="#proposal"
                   className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl border font-semibold text-sm transition-all duration-300 group"
                   style={{ borderColor: "hsl(var(--border))", color: "hsl(var(--foreground))", background: "hsl(220 20% 100%)" }}
-                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = accent.primary.replace(")", "/0.35)"); }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = hslAlpha(accent.primary, 0.35); }}
                   onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "hsl(var(--border))"; }}
                 >
                   Get a Proposal
@@ -207,7 +390,7 @@ const ServicePage = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
               className="rounded-2xl p-8 relative overflow-hidden"
-              style={{ background: "hsl(220 20% 100%)", border: `1px solid ${accent.primary.replace(")", "/0.22)")}`, boxShadow: `0 2px 20px ${accent.glow}` }}
+              style={{ background: "hsl(220 20% 100%)", border: `1px solid ${hslAlpha(accent.primary, 0.22)}`, boxShadow: `0 2px 20px ${accent.glow}` }}
             >
               <div className="absolute top-0 left-0 right-0 h-1 rounded-t-2xl"
                 style={{ background: `linear-gradient(to right, ${accent.primary}, transparent)` }} />
@@ -243,11 +426,11 @@ const ServicePage = () => {
                 transition={{ duration: 0.5, delay: i * 0.07 }}
                 className="group flex gap-4 p-6 rounded-2xl transition-all duration-400"
                 style={{ background: "hsl(220 20% 100%)", border: "1px solid hsl(var(--border))" }}
-                onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.borderColor = accent.primary.replace(")", "/0.28)"); el.style.boxShadow = `0 8px 32px ${accent.glow}`; el.style.transform = "translateY(-2px)"; }}
+                onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.borderColor = hslAlpha(accent.primary, 0.28); el.style.boxShadow = `0 8px 32px ${accent.glow}`; el.style.transform = "translateY(-2px)"; }}
                 onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.borderColor = "hsl(var(--border))"; el.style.boxShadow = ""; el.style.transform = ""; }}
               >
                 <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform"
-                  style={{ background: accent.primary.replace(")", "/0.10)"), border: `1.5px solid ${accent.primary.replace(")", "/0.22)")}` }}>
+                  style={{ background: hslAlpha(accent.primary, 0.10), border: `1.5px solid ${hslAlpha(accent.primary, 0.22)}` }}>
                   <Check className="w-4 h-4" style={{ color: accent.primary }} />
                 </div>
                 <div>
@@ -329,7 +512,7 @@ const ServicePage = () => {
                 {service.benefits.map((benefit) => (
                   <div key={benefit.title} className="flex gap-3">
                     <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
-                      style={{ background: accent.primary.replace(")", "/0.10)"), border: `1px solid ${accent.primary.replace(")", "/0.22)")}` }}>
+                      style={{ background: hslAlpha(accent.primary, 0.10), border: `1px solid ${hslAlpha(accent.primary, 0.22)}` }}>
                       <Check className="w-3 h-3" style={{ color: accent.primary }} />
                     </div>
                     <div>

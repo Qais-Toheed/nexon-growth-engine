@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Calendar, ArrowUpRight, Sparkles } from "lucide-react";
+import { MessageCircle, ArrowUpRight, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
+
+const WHATSAPP_PRIMARY = "923094278123";
 
 interface CTABannerProps {
   headline?: string;
@@ -10,7 +12,7 @@ interface CTABannerProps {
 
 export function CTABanner({
   headline = "Ready to build something that actually grows your business?",
-  subheadline = "Book a free 30-minute strategy call. We'll review your situation and give you an honest assessment of what would move the needle.",
+  subheadline = "Chat with us on WhatsApp for the fastest response, or book a strategy call. We'll review your situation and give you an honest assessment of what would move the needle.",
 }: CTABannerProps) {
   return (
     <section
@@ -107,14 +109,14 @@ export function CTABanner({
               asChild size="lg"
               className="relative font-bold px-10 text-base group overflow-hidden rounded-2xl h-14"
               style={{
-                background: "linear-gradient(135deg, hsl(var(--primary)), hsl(214 100% 42%))",
+                background: "linear-gradient(135deg, #1DA851, #25D366)",
                 color: "white",
-                boxShadow: "0 6px 40px hsl(214 100% 50% / 0.50), 0 2px 12px hsl(214 100% 50% / 0.30), inset 0 1px 0 hsl(214 100% 75% / 0.25)",
+                boxShadow: "0 6px 40px hsl(142 70% 45% / 0.50), 0 2px 12px hsl(142 70% 45% / 0.30), inset 0 1px 0 hsl(142 70% 60% / 0.25)",
               }}
             >
-              <a href="https://calendly.com" target="_blank" rel="noopener noreferrer">
-                <Calendar className="w-4 h-4" />
-                Book a Free Strategy Call
+              <a href={`https://wa.me/${WHATSAPP_PRIMARY}?text=${encodeURIComponent("Hi Nexon Growth! I'm interested in discussing a project. Can we chat?")}`} target="_blank" rel="noopener noreferrer">
+                <MessageCircle className="w-4 h-4" />
+                Chat on WhatsApp
                 <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
               </a>
             </Button>
